@@ -8,7 +8,7 @@ Use Paperclip's own issue system as the canonical execution plan for harness dev
 
 ## Canonical Workflow
 
-1. Keep strategy and scope in `harness/discovery.md`.
+1. Keep strategy and scope in `harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md`.
 2. Keep harness execution inside a dedicated Paperclip project (`Harness Scaffolding`).
 3. Materialize execution tasks as Paperclip issues within that project.
 4. Run work through normal assignment + checkout + status transitions.
@@ -88,26 +88,21 @@ The script creates the parent issue first, then child issues linked via `parentI
 
 ### Docker one-command path
 
-If Paperclip is running in Docker quickstart, seed directly through the container:
+If Paperclip is running in Docker, use the consolidated setup script:
 
 ```sh
-./harness/scripts/seed-harness-issues-docker.sh
-```
-
-Optional env overrides:
-
-```sh
-PAPERCLIP_API_BASE=http://localhost:3100 \
+PAPERCLIP_API_KEY=<board-token> \
 PAPERCLIP_COMPANY_ID=<company-id> \
-PAPERCLIP_API_KEY=<agent-key-optional> \
-./harness/scripts/seed-harness-issues-docker.sh
+HARNESS_ROLE_SET=core \
+HARNESS_ADAPTER_TYPE=opencode_local \
+./harness/scripts/setup-harness-docker.sh
 ```
 
-Defaults used by the wrapper:
+This runs:
 
-- compose file: `docker/docker-compose.quickstart.yml`
-- compose env file: `.env`
-- service name: `paperclip`
+1. issue seeding
+2. project/label/context bootstrap
+3. role-agent configuration
 
 ### Post-seed context bootstrap
 
@@ -131,3 +126,52 @@ This script ensures:
 - Paperclip issues are canonical for execution tracking.
 - GitHub is canonical for PR/review artifacts.
 - Every PR URL should be posted back to the related Paperclip issue comment thread.
+
+## Reproducibility Principle
+
+Harness setup must be scriptable and replayable for new users/companies.
+
+- Do not rely on ad hoc UI-only setup.
+- Prefer scripts that can recreate project context, issue scaffolding, and agent configuration.
+- When API behavior changes, update `harness/scripts/README.md` in the same PR.
+- For harness workflow/config PRs, run `harness/templates/PR-CHECKLIST.md` before merge.
+
+Current setup scripts:
+
+- `harness/scripts/seed-harness-issues.sh`
+- `harness/scripts/bootstrap-harness-project-context.sh`
+- `harness/scripts/setup-harness-agent-configs.sh`
+- `harness/scripts/setup-harness-docker.sh`
+- `harness/scripts/README.md`
+
+### Agent config setup
+
+Host mode:
+
+```sh
+PAPERCLIP_API_BASE=http://localhost:3100 \
+PAPERCLIP_API_KEY=<board-token> \
+PAPERCLIP_COMPANY_ID=<company-id> \
+HARNESS_ROLE_SET=core \
+HARNESS_ADAPTER_TYPE=opencode_local \
+./harness/scripts/setup-harness-agent-configs.sh
+```
+
+Docker mode:
+
+```sh
+PAPERCLIP_API_KEY=<board-token> \
+PAPERCLIP_COMPANY_ID=<company-id> \
+HARNESS_RUN_SEED=false \
+HARNESS_RUN_CONTEXT_BOOTSTRAP=false \
+HARNESS_RUN_AGENT_SETUP=true \
+HARNESS_ROLE_SET=core \
+HARNESS_ADAPTER_TYPE=opencode_local \
+./harness/scripts/setup-harness-docker.sh
+```
+
+Role set options:
+
+- `minimal`: Builder + Reviewer
+- `core`: Builder + Reviewer + Tester
+- `full`: Builder + Reviewer + Tester + Architect + Auditor

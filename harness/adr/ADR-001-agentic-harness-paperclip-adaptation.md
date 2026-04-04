@@ -223,5 +223,5 @@ To make harness development self-improving inside Paperclip, prioritize issue-na
 
 Reference implementation artifacts:
 
-- `harness/paperclip-issues-plan.md`
+- `harness/adr/ADR-002-paperclip-issues-execution-plan.md`
 - `harness/scripts/seed-harness-issues.sh`

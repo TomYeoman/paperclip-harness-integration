@@ -29,7 +29,7 @@ const contextBlock = [
   "## Harness Execution Context",
   "- Workstream: harness",
   `- Execution target: repository code in \`${workspaceCwd}\``,
-  "- Primary references: `harness/discovery.md`, `harness/harness.md`",
+  "- Primary references: `harness/adr/ADR-000-original-harness-spec.md`, `harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md`",
   `- Runtime note: this Paperclip instance is configured with a bind-mounted workspace at \`${workspaceCwd}\``,
 ].join("\n");
 
@@ -52,7 +52,7 @@ async function request(method, path, body) {
   return res.json();
 }
 
-function appendContextIfMissing(description) {
+function ensureContextBlock(description) {
   const current = (description ?? "").trim();
   if (current.includes("## Harness Execution Context")) return current;
   if (!current) return contextBlock.trim();
@@ -73,7 +73,7 @@ async function ensureProjectId() {
   const created = await request("POST", `/api/companies/${companyId}/projects`, {
     name: projectName,
     description:
-      "Paperclip-native harness build. Sources: harness/discovery.md and harness/harness.md.",
+      "Paperclip-native harness build. Sources: harness/adr/ADR-000-original-harness-spec.md and harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md.",
     status: "in_progress",
     workspace: {
       name: "workspace",
@@ -120,7 +120,7 @@ async function main() {
 
   for (const issue of issues) {
     const full = await request("GET", `/api/issues/${issue.id}`);
-    const description = appendContextIfMissing(full.description);
+    const description = ensureContextBlock(full.description);
     const labelIds = unique([...(Array.isArray(full.labelIds) ? full.labelIds : []), labelId]);
     const payload = {
       projectId,

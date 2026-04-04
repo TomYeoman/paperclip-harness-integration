@@ -12,8 +12,9 @@ This file is the runtime-agnostic contract for harness work in this repository.
 
 - Edit repository code only in `/workspace`.
 - Primary context sources:
-  - `harness/discovery.md`
-  - `harness/harness.md`
+  - `harness/adr/ADR-000-original-harness-spec.md`
+  - `harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md`
+  - `harness/adr/ADR-002-paperclip-issues-execution-plan.md`
   - Current issue description/comments/documents
 
 ## Execution Model

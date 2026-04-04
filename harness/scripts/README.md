@@ -8,6 +8,8 @@ These scripts make harness setup reproducible across machines and companies.
 - We want new contributors to bootstrap the same project/issue/agent structure.
 - We want CI or automation to execute the same flow consistently.
 
+Canonical strategy/operations decisions are tracked in `harness/adr/`.
+
 ## Maintenance policy (required)
 
 - If a harness change adds or modifies Paperclip API behavior, make it scriptable in `harness/scripts/`.

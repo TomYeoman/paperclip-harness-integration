@@ -66,7 +66,7 @@ create_issue() {
 ## Harness Execution Context
 - Workstream: harness
 - Execution target: repository code in ${HARNESS_WORKSPACE_CWD:-/workspace}
-- Primary references: harness/discovery.md, harness/harness.md
+- Primary references: harness/adr/ADR-000-original-harness-spec.md, harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md
 - Runtime note: this Paperclip instance is configured with a bind-mounted workspace at ${HARNESS_WORKSPACE_CWD:-/workspace}"
 
   local cmd=(
