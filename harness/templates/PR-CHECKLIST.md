@@ -13,6 +13,7 @@ Use this checklist for any PR that changes harness behavior, workflow, or Paperc
 - [ ] **Acceptance criteria:** All issue acceptance criteria are addressed.
 - [ ] **Evidence posted:** PR URL is posted back to the Paperclip issue comments.
 - [ ] **Review summary on issue:** Reviewer posted approve/block summary in the issue thread.
+- [ ] **GitHub preflight passed:** `harness/scripts/setup-harness-github.sh` succeeded in the runtime environment.
 
 ## Automation policy checks
 

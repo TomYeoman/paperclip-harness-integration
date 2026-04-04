@@ -36,6 +36,11 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
    - Creates/updates role agents (Builder/Reviewer/Tester/etc.) under the CEO.
    - Sets adapter type/model/cwd and per-role `instructionsFilePath`.
    - Use after role files are ready, and whenever role config drifts.
+
+4. `setup-harness-github.sh`
+   - Validates GitHub integration for PR workflows from the harness runtime.
+   - Checks `gh` auth, repo access, remote accessibility, and Issues availability.
+   - Prints the expected branch -> push -> PR -> switch-back flow.
    - Adapter-specific behavior: see [harness/adapters/](../adapters/) for runtime overlay docs.
 
 4. `setup-harness-workspace-policy.sh`
@@ -79,6 +84,7 @@ HARNESS_ADAPTER_TYPE=opencode_local \
 
 - `HARNESS_RUN_CONTEXT_BOOTSTRAP=true|false`
 - `HARNESS_RUN_AGENT_SETUP=true|false`
+- `HARNESS_RUN_GITHUB_SETUP=true|false` (default false)
 
 Example (skip issue creation, only refresh agent config):
 
@@ -104,6 +110,11 @@ Optional:
 - `HARNESS_ADAPTER_TYPE` (default `opencode_local`)
 - `HARNESS_MODEL` (override auto-discovered model)
 - `HARNESS_HELLO_ISSUE_TITLE` (default `HARNESS: Hello world`)
+- `HARNESS_GIT_DIR` (default `/workspace`)
+- `HARNESS_GITHUB_REMOTE` (default `fork`)
+- `HARNESS_GITHUB_REPO` (optional explicit `owner/repo`)
+- `HARNESS_BASE_BRANCH` (default `master`)
+- `HARNESS_GH_CONFIG_DIR` (default `/paperclip/.config/gh`)
 
 Optional for workspace policy script:
 
@@ -118,3 +129,28 @@ Role set mapping:
 - `minimal`: Builder + Reviewer
 - `core`: Builder + Reviewer + Tester + Architect
 - `full`: Builder + Reviewer + Tester + Architect + Auditor
+
+## GitHub integration setup (Docker)
+
+Authenticate GitHub CLI inside the running Paperclip container once:
+
+```sh
+docker compose --env-file .env -f docker/docker-compose.quickstart.yml -f docker/docker-compose.workspace.yml exec --user node paperclip gh auth login
+```
+
+Alternative (non-interactive): set `GH_TOKEN` (or `GITHUB_TOKEN`) in `.env` so `gh` commands authenticate from environment.
+
+Note: some adapter runtimes set a temporary `XDG_CONFIG_HOME`. In that case, set `GH_CONFIG_DIR=/paperclip/.config/gh` (or `HARNESS_GH_CONFIG_DIR`) so `gh` can still locate auth state.
+
+Run GitHub preflight as part of harness setup:
+
+```sh
+PAPERCLIP_API_KEY=<board-token> \
+PAPERCLIP_COMPANY_ID=<company-id> \
+HARNESS_RUN_CONTEXT_BOOTSTRAP=false \
+HARNESS_RUN_AGENT_SETUP=false \
+HARNESS_RUN_GITHUB_SETUP=true \
+HARNESS_GITHUB_REMOTE=fork \
+HARNESS_BASE_BRANCH=master \
+./harness/scripts/setup-harness-docker.sh
+```

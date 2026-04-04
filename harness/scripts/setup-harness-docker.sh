@@ -5,6 +5,7 @@ set -euo pipefail
 # Runs (in order):
 # 1) project + hello-world issue bootstrap
 # 2) agent role configuration
+# 3) optional GitHub integration preflight
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "docker is required" >&2
@@ -17,6 +18,10 @@ if [[ ! -f "harness/scripts/bootstrap-harness-project-context.sh" ]]; then
 fi
 if [[ ! -f "harness/scripts/setup-harness-agent-configs.sh" ]]; then
   echo "Missing harness/scripts/setup-harness-agent-configs.sh" >&2
+  exit 1
+fi
+if [[ ! -f "harness/scripts/setup-harness-github.sh" ]]; then
+  echo "Missing harness/scripts/setup-harness-github.sh" >&2
   exit 1
 fi
 
@@ -54,6 +59,7 @@ done
 
 run_context="${HARNESS_RUN_CONTEXT_BOOTSTRAP:-true}"
 run_agents="${HARNESS_RUN_AGENT_SETUP:-true}"
+run_github="${HARNESS_RUN_GITHUB_SETUP:-false}"
 
 running_services="$(${compose_cmd[@]} ps --status running --services || true)"
 service_running=false
@@ -85,6 +91,7 @@ optional_envs=(
   HARNESS_ROLE_SET
   HARNESS_ADAPTER_TYPE
   HARNESS_MODEL
+  HARNESS_GH_CONFIG_DIR
   HARNESS_CONFIGURE_CEO
   HARNESS_CEO_INSTRUCTIONS_PATH
   HARNESS_BUILDER_NAME
@@ -92,6 +99,10 @@ optional_envs=(
   HARNESS_TESTER_NAME
   HARNESS_ARCHITECT_NAME
   HARNESS_AUDITOR_NAME
+  HARNESS_GIT_DIR
+  HARNESS_GITHUB_REMOTE
+  HARNESS_GITHUB_REPO
+  HARNESS_BASE_BRANCH
 )
 
 for key in "${optional_envs[@]}"; do
@@ -114,6 +125,10 @@ fi
 
 if [[ "$run_agents" == "true" ]]; then
   run_script "harness/scripts/setup-harness-agent-configs.sh" "setup-harness-agent-configs.sh"
+fi
+
+if [[ "$run_github" == "true" ]]; then
+  run_script "harness/scripts/setup-harness-github.sh" "setup-harness-github.sh"
 fi
 
 echo "Harness setup complete."

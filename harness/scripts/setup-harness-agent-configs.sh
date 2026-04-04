@@ -15,6 +15,7 @@ export HARNESS_ADAPTER_TYPE="${HARNESS_ADAPTER_TYPE:-opencode_local}"
 export HARNESS_WORKSPACE_CWD="${HARNESS_WORKSPACE_CWD:-/workspace}"
 export HARNESS_MODEL="${HARNESS_MODEL:-}"
 export HARNESS_CONFIGURE_CEO="${HARNESS_CONFIGURE_CEO:-true}"
+export HARNESS_GH_CONFIG_DIR="${HARNESS_GH_CONFIG_DIR:-/paperclip/.config/gh}"
 
 export HARNESS_CEO_INSTRUCTIONS_PATH="${HARNESS_CEO_INSTRUCTIONS_PATH:-/workspace/harness/runtime-instructions/ceo/AGENTS.md}"
 export HARNESS_BUILDER_NAME="${HARNESS_BUILDER_NAME:-Harness Builder}"
@@ -33,6 +34,7 @@ const adapterType = process.env.HARNESS_ADAPTER_TYPE || "opencode_local";
 const workspaceCwd = process.env.HARNESS_WORKSPACE_CWD || "/workspace";
 const explicitModel = (process.env.HARNESS_MODEL || "").trim();
 const configureCeo = (process.env.HARNESS_CONFIGURE_CEO || "true").toLowerCase() !== "false";
+const ghConfigDir = (process.env.HARNESS_GH_CONFIG_DIR || "").trim();
 
 const ceoInstructionsPath =
   process.env.HARNESS_CEO_INSTRUCTIONS_PATH || "/workspace/harness/runtime-instructions/ceo/AGENTS.md";
@@ -157,8 +159,13 @@ async function setInstructionsPath(agentId, path) {
 }
 
 async function upsertRoleAgent(existingAgents, ceoId, model, spec) {
+  const commonAdapterEnv = {
+    ...(ghConfigDir ? { GH_CONFIG_DIR: ghConfigDir } : {}),
+  };
+
   const adapterConfig = {
     cwd: workspaceCwd,
+    ...(Object.keys(commonAdapterEnv).length > 0 ? { env: commonAdapterEnv } : {}),
     ...(model ? { model } : {}),
   };
 
@@ -211,9 +218,13 @@ async function main() {
   }
 
   if (configureCeo) {
+    const commonAdapterEnv = {
+      ...(ghConfigDir ? { GH_CONFIG_DIR: ghConfigDir } : {}),
+    };
     await request("PATCH", `/api/agents/${ceo.id}`, {
       adapterConfig: {
         cwd: workspaceCwd,
+        ...(Object.keys(commonAdapterEnv).length > 0 ? { env: commonAdapterEnv } : {}),
       },
     });
     await setInstructionsPath(ceo.id, ceoInstructionsPath);
