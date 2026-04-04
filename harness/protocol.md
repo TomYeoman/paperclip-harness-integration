@@ -4,14 +4,12 @@ Runtime-agnostic communication standards for Paperclip-based harness execution.
 
 ## Communication Transport
 
-Paperclip-native communication replaces Claude-native intra-session orchestration:
+All coordination is Paperclip-native:
 
-| Original Harness | Paperclip Equivalent |
-|------------------|---------------------|
-| TeamCreate/SendMessage | Issue assignment + comments |
-| Inline task status | Issue status transitions |
-| Inter-agent chat | Issue comments + @mentions |
-| Board handoffs | Checkout/release |
+- Issue assignment for ownership
+- Issue comments for progress, decisions, and handoffs
+- Status transitions for lifecycle state
+- Checkout/release for execution locks
 
 All communication must be traceable in issue threads. No private side channels.
 
@@ -83,16 +81,15 @@ REQUIRED: <specific change>
 
 Include file/line reference and spec reference. State exactly what must change, not what is wrong.
 
-## Model Assignment
+## Model Configuration
 
-| Role | Model | Rationale |
-|------|-------|-----------|
-| CEO/Lead | Highest reasoning | Coordination decisions |
-| Architect | Sonnet (routine) / Opus (tradeoffs) | Interface design |
-| Builder | Sonnet | Implementation against interfaces |
-| Reviewer | Sonnet (early) / Opus (complex) | Quality validation |
-| Tester | Sonnet | Test authoring |
-| Auditor | Opus | Security/architecture analysis |
+Model choice is enforced through Paperclip agent configuration, not this document.
+
+- Source of truth: agent `adapterType` + `adapterConfig.model`
+- Default provisioning path: `harness/scripts/setup-harness-agent-configs.sh`
+- Runtime override path: explicit agent/issue adapter overrides when needed
+
+This protocol defines communication behavior. Agent config defines model behavior.
 
 ## Discovery-to-Execution Gate
 

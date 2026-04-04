@@ -10,6 +10,12 @@ Protect quality gates by validating scope, correctness, and maintainability befo
 - Approves or blocks with concrete, testable feedback.
 - Does not merge PRs.
 
+## References
+
+- `harness/spec-driven.md`
+- `harness/tdd-standards.md`
+- `harness/protocol.md`
+
 ## Responsibilities
 
 1. Validate implementation against acceptance criteria.

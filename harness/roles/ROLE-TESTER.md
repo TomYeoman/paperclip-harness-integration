@@ -10,6 +10,12 @@ Validate behavior at integration/acceptance level so completed issues are trustw
 - Verifies acceptance behavior, regression coverage, and determinism.
 - Does not merge PRs.
 
+## References
+
+- `harness/spec-driven.md`
+- `harness/tdd-standards.md`
+- `harness/protocol.md`
+
 ## Responsibilities
 
 1. Translate issue acceptance criteria into executable tests.

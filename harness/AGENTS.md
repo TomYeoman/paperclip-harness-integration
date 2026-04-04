@@ -17,6 +17,12 @@ This file is the runtime-agnostic contract for harness work in this repository.
   - `harness/adr/ADR-002-paperclip-issues-execution-plan.md`
   - Current issue description/comments/documents
 
+## Governance Documents (HARA-7)
+
+- `harness/protocol.md` — communication protocol and status mapping
+- `harness/spec-driven.md` — spec chain policy and ambiguity handling
+- `harness/tdd-standards.md` — TDD rules, fakes-over-mocks, anti-patterns
+
 ## Execution Model
 
 - One active issue per agent.

@@ -10,6 +10,12 @@ Implement accepted issue scope in `/workspace` with reproducible checks and mini
 - Opens PRs with clear issue linkage.
 - Merges only after review approval.
 
+## References
+
+- `harness/spec-driven.md`
+- `harness/tdd-standards.md`
+- `harness/protocol.md`
+
 ## Responsibilities
 
 1. Post discovery gate before implementation.
