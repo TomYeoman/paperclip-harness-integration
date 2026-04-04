@@ -71,6 +71,84 @@ SELF-AUDIT:
 PR: <url or NONE>
 ```
 
+## Lifecycle States
+
+Harness work follows this canonical lifecycle:
+
+| State | Meaning | Allowed Next States |
+|-------|---------|-------------------|
+| `backlog` | Triaged, not yet ready | `todo` |
+| `todo` | Ready to work, assigned | `in_progress`, `blocked`, `cancelled` |
+| `in_progress` | actively executing | `in_review`, `blocked`, `cancelled` |
+| `in_review` | PR open, awaiting review | `in_progress`, `done`, `blocked` |
+| `done` | merged and verified | — (terminal) |
+| `blocked` | awaiting external input | `in_progress`, `cancelled` |
+| `cancelled` | abandoned | — (terminal) |
+
+### State Transition Rules
+
+1. `backlog` → `todo`: Lead assigns the issue
+2. `todo` → `in_progress`: Agent checks out the issue
+3. `in_progress` → `in_review`: Builder opens PR, posts link in issue
+4. `in_review` → `done`: Reviewer approves and Builder merges
+5. `in_review` → `in_progress`: Reviewer requests changes
+6. Any active → `blocked`: Agent posts BLOCK comment, updates status
+7. `blocked` → `in_progress`: Blocker resolved, agent resumes work
+8. `todo`/`in_progress`/`in_review` → `cancelled`: Lead cancels with reason
+
+### State Transition Commands
+
+```bash
+# Start work (agent self-transition on checkout)
+POST /api/issues/{id}/checkout
+
+# Move to in_review when PR is ready
+PATCH /api/issues/{id} { "status": "in_review", "comment": "PR: https://..." }
+
+# Mark done after merge
+PATCH /api/issues/{id} { "status": "done", "comment": "Merged" }
+
+# Block on external dependency
+PATCH /api/issues/{id} { "status": "blocked", "comment": "BLOCK: awaiting X from Y" }
+```
+
+## Role Responsibilities
+
+| Role | On Checkout | During Work | On Complete | Never |
+|------|------------|-------------|-------------|-------|
+| Builder | Checkouts issue, posts DISCOVERY | Implements, runs checks | Opens PR, moves to `in_review`, posts PR link | Merges |
+| Reviewer | — | Reviews PR | Posts approve/block summary, approves merge | Checks out, implements |
+| Lead | Assigns to `todo` | Orchestrates, unblocks | Confirms final verification | Merges code |
+| Tester | — | Validates acceptance criteria | Posts test results | Merges |
+
+## Escalation Rules
+
+### When to Escalate
+
+1. **Scope conflict**: Acceptance criteria contradicts discovered behavior
+2. **Blocker persists**: 3 concrete attempts failed
+3. **Decision needed**: Governance or security decision required
+4. **Review disagreement**: Cannot resolve with evidence after 2 rounds
+
+### Escalation Format
+
+```
+ESCALATE: <issue-id>
+TYPE: scope | blocker | decision | review
+STATUS: <current status>
+EVIDENCE:
+- <concrete observation 1>
+- <concrete observation 2>
+REQUIRED: <what needs to happen>
+```
+
+### Unblock Protocol
+
+1. Agent posts BLOCK comment with specific required action
+2. Status → `blocked`, unblocker named in comment
+3. Unblocker resolves → posts comment confirming resolution
+4. Agent confirms resumption → status → `in_progress`
+
 ## Block Comment Format
 
 ```
@@ -101,6 +179,16 @@ No transition without explicit go signal:
 ```
 SELF-GO: trivial change, 12 lines, single file, no new interfaces. Proceeding.
 ```
+
+## GitHub PR Preflight
+
+Before claiming a task that requires a PR:
+
+1. GitHub CLI auth is valid in runtime environment (`gh auth status`).
+2. Target repo is accessible (`gh repo view`).
+3. Push remote is reachable (`git ls-remote <remote>`).
+
+If preflight fails, post `BLOCK` in the issue with exact failure output and required setup step.
 
 ## Scalability Rules
 

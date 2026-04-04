@@ -10,6 +10,13 @@ Coordinate work across agents so each `HARA-*` issue moves from `todo` to `done`
 - Does not implement production changes directly.
 - Does not merge PRs.
 
+## Lifecycle Responsibilities
+
+- Assigns issues to `todo` → Builder can checkout
+- Cancels abandoned work (`todo`/`in_progress`/`in_review` → `cancelled`)
+- Confirms final verification before `done`
+- Ensures Block → Unblock flow operates per `harness/protocol.md`
+
 ## Responsibilities
 
 1. Keep one active owner per issue.

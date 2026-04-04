@@ -19,9 +19,11 @@ This file is the runtime-agnostic contract for harness work in this repository.
 
 ## Governance Documents (HARA-7)
 
-- `harness/protocol.md` — communication protocol and status mapping
+- `harness/protocol.md` — communication protocol, lifecycle states, status mapping
 - `harness/spec-driven.md` — spec chain policy and ambiguity handling
 - `harness/tdd-standards.md` — TDD rules, fakes-over-mocks, anti-patterns
+- `harness/templates/ISSUE-COMMENT-TEMPLATES.md` — standardized comment formats
+- `harness/templates/PR-CHECKLIST.md` — PR checklist for workflow changes
 
 ## Execution Model
 
@@ -34,11 +36,15 @@ This file is the runtime-agnostic contract for harness work in this repository.
 
 1. Confirm correct issue (`HARA-*`) and acceptance criteria.
 2. Run discovery before code changes.
-3. Claim work via checkout and move to `in_progress`.
-4. Implement in `/workspace` on a task branch.
-5. Open PR with issue reference.
-6. Move issue to `in_review` when PR is ready.
-7. After review and merge, move issue to `done` with final summary.
+3. For PR-bound tasks, verify GitHub preflight (`harness/scripts/setup-harness-github.sh`) in runtime environment.
+4. Claim work via checkout and move to `in_progress`.
+5. Implement in `/workspace` on a task branch.
+6. Open PR with issue reference.
+7. Move issue to `in_review` when PR is ready.
+8. After review and merge, move issue to `done` with final summary.
+9. In shared-workspace mode, switch the checkout back to base branch after PR creation/merge.
+
+See `harness/protocol.md` for the canonical Lifecycle States and transition rules.
 
 ## Discovery Gate (Must Be Posted In Issue)
 
