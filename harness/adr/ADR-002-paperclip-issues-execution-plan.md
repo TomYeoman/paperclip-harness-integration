@@ -126,6 +126,7 @@ This script ensures:
 - Paperclip issues are canonical for execution tracking.
 - GitHub is canonical for PR/review artifacts.
 - Every PR URL should be posted back to the related Paperclip issue comment thread.
+- Reviewers also post an approve/block summary in the related Paperclip issue thread.
 
 ## Reproducibility Principle
 

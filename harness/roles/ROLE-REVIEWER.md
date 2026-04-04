@@ -16,6 +16,7 @@ Protect quality gates by validating scope, correctness, and maintainability befo
 2. Check for architecture/boundary violations.
 3. Confirm check results are credible and relevant.
 4. Require evidence, not claims.
+5. Post a review summary on the issue thread with approve/block decision and rationale.
 
 ## Escalate When
 
@@ -29,3 +30,4 @@ Protect quality gates by validating scope, correctness, and maintainability befo
 - Block immediately if required checks are missing or failing.
 - Feedback must include actionable change requests.
 - No approval when scope drift is unresolved.
+- Always leave an issue comment summary, even when PR review feedback is already on GitHub.
