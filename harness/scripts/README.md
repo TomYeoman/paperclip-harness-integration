@@ -38,6 +38,13 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
    - Use after role files are ready, and whenever role config drifts.
    - Adapter-specific behavior: see [harness/adapters/](../adapters/) for runtime overlay docs.
 
+4. `setup-harness-workspace-policy.sh`
+   - Configures project execution workspace policy for isolated worktree-based workspaces.
+   - Sets `executionWorkspacePolicy.enabled=true` with `defaultMode=isolated_workspace`.
+   - Configures `workspaceStrategy.type=git_worktree` with branch template.
+   - Use to enable predictable git worktree isolation for harness issue runs.
+   - Requires `PAPERCLIP_PROJECT_ID` env var (project to configure).
+
 ## Why each agent still "knows" about common rules
 
 Role contracts are split into two layers:
@@ -87,6 +94,7 @@ HARNESS_RUN_AGENT_SETUP=true \
 
 - `PAPERCLIP_API_KEY`: board token
 - `PAPERCLIP_COMPANY_ID`: target company
+- `PAPERCLIP_PROJECT_ID`: project ID to configure (required for workspace policy script)
 
 Optional:
 
@@ -96,6 +104,14 @@ Optional:
 - `HARNESS_ADAPTER_TYPE` (default `opencode_local`)
 - `HARNESS_MODEL` (override auto-discovered model)
 - `HARNESS_HELLO_ISSUE_TITLE` (default `HARNESS: Hello world`)
+
+Optional for workspace policy script:
+
+- `HARNESS_EXECUTION_WORKSPACE_MODE` (default `isolated_workspace`)
+- `HARNESS_WORKSPACE_STRATEGY_TYPE` (default `git_worktree`)
+- `HARNESS_BRANCH_TEMPLATE` (default `harness/issue-{issueNumber}`)
+- `HARNESS_WORKTREE_PARENT_DIR` (default `/workspace/worktrees`)
+- `HARNESS_ALLOW_ISSUE_OVERRIDE` (default `true`)
 
 Role set mapping:
 
