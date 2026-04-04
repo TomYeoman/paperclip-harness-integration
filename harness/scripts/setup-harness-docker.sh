@@ -3,19 +3,14 @@ set -euo pipefail
 
 # One-command harness bootstrap for Docker deployments.
 # Runs (in order):
-# 1) issue seeding
-# 2) project/label/context bootstrap
-# 3) agent role configuration
+# 1) project + hello-world issue bootstrap
+# 2) agent role configuration
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "docker is required" >&2
   exit 1
 fi
 
-if [[ ! -f "harness/scripts/seed-harness-issues.sh" ]]; then
-  echo "Missing harness/scripts/seed-harness-issues.sh" >&2
-  exit 1
-fi
 if [[ ! -f "harness/scripts/bootstrap-harness-project-context.sh" ]]; then
   echo "Missing harness/scripts/bootstrap-harness-project-context.sh" >&2
   exit 1
@@ -57,7 +52,6 @@ for file in "${compose_files[@]}"; do
   compose_cmd+=(-f "$trimmed")
 done
 
-run_seed="${HARNESS_RUN_SEED:-true}"
 run_context="${HARNESS_RUN_CONTEXT_BOOTSTRAP:-true}"
 run_agents="${HARNESS_RUN_AGENT_SETUP:-true}"
 
@@ -87,6 +81,7 @@ optional_envs=(
   HARNESS_PROJECT_NAME
   HARNESS_LABEL_NAME
   HARNESS_LABEL_COLOR
+  HARNESS_HELLO_ISSUE_TITLE
   HARNESS_ROLE_SET
   HARNESS_ADAPTER_TYPE
   HARNESS_MODEL
@@ -112,10 +107,6 @@ run_script() {
   ${compose_cmd[@]} exec -T --user node "${exec_env[@]}" "$SERVICE" \
     sh -lc "cat >/tmp/$temp_name && chmod +x /tmp/$temp_name && /tmp/$temp_name" < "$local_path"
 }
-
-if [[ "$run_seed" == "true" ]]; then
-  run_script "harness/scripts/seed-harness-issues.sh" "seed-harness-issues.sh"
-fi
 
 if [[ "$run_context" == "true" ]]; then
   run_script "harness/scripts/bootstrap-harness-project-context.sh" "bootstrap-harness-project-context.sh"

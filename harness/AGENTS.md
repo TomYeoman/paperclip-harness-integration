@@ -62,6 +62,7 @@ R: yes | blocked:<reason>
 - Any repeatable harness operation that uses the Paperclip API must be scriptable.
 - Prefer extending an existing script in `harness/scripts/` over adding ad hoc manual steps.
 - When behavior changes, update `harness/scripts/README.md` in the same PR so usage stays accurate.
+- Exemption: local-only issue maintenance (status/assignment/comments for a specific local run) does not require script changes when it does not alter harness behavior.
 - UI-only actions are allowed for one-off debugging, not for core setup/runbook flows.
 
 ## Merge Ownership
@@ -110,7 +111,7 @@ Escalate in issue comments when:
 - Builder: implement `HARA-*` code/doc changes.
 - Reviewer: validate acceptance criteria and quality before merge.
 
-Start with CEO + Builder + Reviewer. Add Architect/Tester/Auditor roles as `HARA-6` progresses.
+Recommended core setup: CEO + Builder + Reviewer + Architect (+ Tester when you want explicit acceptance coverage). Add Auditor as the final role.
 
 Role contract files:
 

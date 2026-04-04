@@ -14,6 +14,7 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
 
 - If a harness change adds or modifies Paperclip API behavior, make it scriptable in `harness/scripts/`.
 - Update this README in the same PR to reflect any new flags, defaults, ordering, or prerequisites.
+- Exemption: local-only issue operations (e.g., assigning, commenting, or status moves for a one-off local run) do not require script updates when harness behavior is unchanged.
 - Avoid introducing UI-only runbook steps for core setup unless there is no API path.
 - Use `harness/templates/PR-CHECKLIST.md` for harness PR reviews.
 
@@ -22,21 +23,16 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
 1. `setup-harness-docker.sh`
    - **Primary entrypoint for Docker users.**
    - Runs the full sequence in the running `paperclip` container:
-     1) seed issues, 2) attach project/label/context, 3) configure role agents.
+     1) bootstrap project + hello-world issue, 2) configure role agents.
    - Use this first in most setups.
 
-2. `seed-harness-issues.sh`
-   - Creates the `HARA-*` parent/child issue scaffold.
-   - Adds a baseline `Harness Execution Context` block in issue descriptions.
-   - Use when creating a fresh backlog.
-
-3. `bootstrap-harness-project-context.sh`
+2. `bootstrap-harness-project-context.sh`
    - Ensures project `Harness Scaffolding` + label `harness` exist.
-   - Assigns all `HARNESS:` issues to that project and label.
-   - Appends context block to issue descriptions when missing.
-   - Use after seeding or when migrating existing issues.
+   - Ensures one initial issue exists: `HARNESS: Hello world`.
+   - Sets issue instructions to run `pwd && ls -a` and report output.
+   - Use for fresh bootstrap or to re-sync project metadata.
 
-4. `setup-harness-agent-configs.sh`
+3. `setup-harness-agent-configs.sh`
    - Creates/updates role agents (Builder/Reviewer/Tester/etc.) under the CEO.
    - Sets adapter type/model/cwd and per-role `instructionsFilePath`.
    - Use after role files are ready, and whenever role config drifts.
@@ -73,7 +69,6 @@ HARNESS_ADAPTER_TYPE=opencode_local \
 
 ### Optional toggles for `setup-harness-docker.sh`
 
-- `HARNESS_RUN_SEED=true|false`
 - `HARNESS_RUN_CONTEXT_BOOTSTRAP=true|false`
 - `HARNESS_RUN_AGENT_SETUP=true|false`
 
@@ -82,7 +77,6 @@ Example (skip issue creation, only refresh agent config):
 ```sh
 PAPERCLIP_API_KEY=<board-token> \
 PAPERCLIP_COMPANY_ID=<company-id> \
-HARNESS_RUN_SEED=false \
 HARNESS_RUN_CONTEXT_BOOTSTRAP=false \
 HARNESS_RUN_AGENT_SETUP=true \
 ./harness/scripts/setup-harness-docker.sh
@@ -100,3 +94,10 @@ Optional:
 - `HARNESS_ROLE_SET` (`minimal|core|full`, default `core`)
 - `HARNESS_ADAPTER_TYPE` (default `opencode_local`)
 - `HARNESS_MODEL` (override auto-discovered model)
+- `HARNESS_HELLO_ISSUE_TITLE` (default `HARNESS: Hello world`)
+
+Role set mapping:
+
+- `minimal`: Builder + Reviewer
+- `core`: Builder + Reviewer + Tester + Architect
+- `full`: Builder + Reviewer + Tester + Architect + Auditor

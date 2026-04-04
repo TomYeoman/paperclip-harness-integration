@@ -6,3 +6,7 @@ Cool features / points of interest:
 
 - The fact every agent/role can be a different model is extremely powerful. We can define codex as the CEO / planner, whilst using claude as the builder / reviewer / tester / etc.
   - In the future we might want a model specifically for image gen, audio gen, video gen, etc - paperclip makes this extremely easy to manage.
+
+Features
+
+- Reviewer must post an approve/block summary in the issue thread based on the PR checklist template.

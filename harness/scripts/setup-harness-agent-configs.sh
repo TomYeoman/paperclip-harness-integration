@@ -126,18 +126,18 @@ function desiredRoleSpecs() {
       capabilities: "Validates acceptance and regression behavior for HARA tasks.",
       instructionsPath: "/workspace/harness/runtime-instructions/tester/AGENTS.md",
     });
+    baseSpecs.push({
+      key: "architect",
+      name: agentNames.architect,
+      role: "engineer",
+      title: "Harness Architect",
+      capabilities: "Defines interfaces and design constraints for harness evolution.",
+      instructionsPath: "/workspace/harness/runtime-instructions/architect/AGENTS.md",
+    });
   }
 
   if (roleSet === "full") {
     baseSpecs.push(
-      {
-        key: "architect",
-        name: agentNames.architect,
-        role: "engineer",
-        title: "Harness Architect",
-        capabilities: "Defines interfaces and design constraints for harness evolution.",
-        instructionsPath: "/workspace/harness/runtime-instructions/architect/AGENTS.md",
-      },
       {
         key: "auditor",
         name: agentNames.auditor,
