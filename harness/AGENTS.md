@@ -127,3 +127,10 @@ Role contract files:
 - `harness/roles/ROLE-REVIEWER.md`
 - `harness/roles/ROLE-TESTER.md`
 - `harness/roles/ROLE-AUDITOR.md`
+
+Adapter overlay docs (runtime-specific behavior):
+
+- `harness/adapters/README.md`
+- `harness/adapters/claude-local.md`
+- `harness/adapters/codex-local.md`
+- `harness/adapters/opencode-local.md`

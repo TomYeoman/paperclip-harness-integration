@@ -36,6 +36,7 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
    - Creates/updates role agents (Builder/Reviewer/Tester/etc.) under the CEO.
    - Sets adapter type/model/cwd and per-role `instructionsFilePath`.
    - Use after role files are ready, and whenever role config drifts.
+   - Adapter-specific behavior: see [harness/adapters/](../adapters/) for runtime overlay docs.
 
 ## Why each agent still "knows" about common rules
 
