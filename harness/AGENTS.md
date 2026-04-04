@@ -56,6 +56,13 @@ R: yes | blocked:<reason>
 - Do not fabricate test/build results.
 - If blocked after three concrete attempts, escalate in the issue with evidence.
 
+## Paperclip API Automation Policy
+
+- Any repeatable harness operation that uses the Paperclip API must be scriptable.
+- Prefer extending an existing script in `harness/scripts/` over adding ad hoc manual steps.
+- When behavior changes, update `harness/scripts/README.md` in the same PR so usage stays accurate.
+- UI-only actions are allowed for one-off debugging, not for core setup/runbook flows.
+
 ## Merge Ownership
 
 - Builder merges after review approval.
@@ -83,6 +90,8 @@ SELF-AUDIT:
 - <criterion>: pass | fail
 PR: <url or NONE>
 ```
+
+For harness workflow/config PRs, also apply `harness/templates/PR-CHECKLIST.md`.
 
 ## Escalation Triggers
 
