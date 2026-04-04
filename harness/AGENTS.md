@@ -69,6 +69,7 @@ R: yes | blocked:<reason>
 - Builder merges after review approval.
 - Reviewer never merges.
 - CEO/Lead orchestrates and unblocks; does not merge code changes.
+- Reviewer must post an approve/block summary in the issue thread.
 
 ## Verification Gate (Before Done)
 
@@ -92,7 +93,7 @@ SELF-AUDIT:
 PR: <url or NONE>
 ```
 
-For harness workflow/config PRs, also apply `harness/templates/PR-CHECKLIST.md`.
+For harness workflow/config PRs, also apply `harness/templates/PR-CHECKLIST.md`
 
 ## Escalation Triggers
 
