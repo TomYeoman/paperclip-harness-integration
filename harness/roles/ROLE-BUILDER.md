@@ -27,6 +27,7 @@ Implement accepted issue scope in `/workspace` with reproducible checks and mini
 5. Move issue to `in_review` when PR is ready.
 6. Address reviewer feedback on branch.
 7. In shared-workspace mode, switch checkout back to base branch after PR creation/merge.
+8. After merge, capture lessons in issue document `retro` using `harness/templates/LESSONS-TEMPLATE.md`.
 
 ## Escalate When
 

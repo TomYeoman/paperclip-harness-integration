@@ -43,6 +43,7 @@ This file is the runtime-agnostic contract for harness work in this repository.
 7. Move issue to `in_review` when PR is ready.
 8. After review and merge, move issue to `done` with final summary.
 9. In shared-workspace mode, switch the checkout back to base branch after PR creation/merge.
+10. After merge, capture lessons in issue document `retro` using `harness/templates/LESSONS-TEMPLATE.md`.
 
 See `harness/protocol.md` for the canonical Lifecycle States and transition rules.
 
@@ -92,6 +93,7 @@ Before marking complete, verify and report:
 2. Relevant tests/checks run (or explicitly not run with reason).
 3. Diff self-review completed.
 4. PR link posted in issue.
+5. Lessons captured in issue `retro` document (or explicit reason why skipped).
 
 Use this completion block in the issue comment:
 

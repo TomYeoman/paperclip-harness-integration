@@ -97,9 +97,9 @@ Current setup scripts:
 
 Use templates in `harness/templates/` for consistent session start/end artifacts:
 
-- `LAUNCH-SCRIPT-TEMPLATE.md` — Session startup with metadata, pre-flight checks, and goal setting
-- `BUILD-JOURNAL-TEMPLATE.md` — Command logging, issues encountered, and findings
-- `LESSONS-TEMPLATE.md` — Retrospective capture after PR merge
+- `ISSUE-COMMENT-TEMPLATES.md` — required DISCOVERY/BLOCK/DONE/REVIEW comment formats
+- `LESSONS-TEMPLATE.md` — required retrospective capture after PR merge (issue document key `retro`)
+- `BUILD-JOURNAL-TEMPLATE.md` — recommended for complex debugging/build runs
 
 See `harness/templates/README.md` for workflow integration guidance.
 

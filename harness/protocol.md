@@ -71,6 +71,13 @@ SELF-AUDIT:
 PR: <url or NONE>
 ```
 
+## Session Artifacts
+
+Use artifacts selectively:
+
+- `harness/templates/LESSONS-TEMPLATE.md` is required after merge (store in issue document key `retro`).
+- `harness/templates/BUILD-JOURNAL-TEMPLATE.md` is recommended for complex debugging sessions (store in issue document key `notes` or as local scratch).
+
 ## Lifecycle States
 
 Harness work follows this canonical lifecycle:
