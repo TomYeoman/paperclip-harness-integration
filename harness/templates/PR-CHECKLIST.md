@@ -32,6 +32,7 @@ Use this checklist for any PR that changes harness behavior, workflow, or Paperc
 - [ ] Scripts touched in this PR pass shell syntax checks (`bash -n ...`).
 - [ ] Any changed setup script has a runnable example command in docs.
 - [ ] Failures/limitations are documented in PR notes (if any checks are intentionally skipped).
+- [ ] **Retro document (`retro`) updated from `LESSONS-TEMPLATE.md`**
 
 ## Reviewer issue summary template
 
