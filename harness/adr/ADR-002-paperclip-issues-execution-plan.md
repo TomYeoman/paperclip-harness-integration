@@ -89,8 +89,19 @@ Current setup scripts:
 
 - `harness/scripts/bootstrap-harness-project-context.sh`
 - `harness/scripts/setup-harness-agent-configs.sh`
+- `harness/scripts/setup-harness-github.sh`
 - `harness/scripts/setup-harness-docker.sh`
 - `harness/scripts/README.md`
+
+## Session Continuity Templates
+
+Use templates in `harness/templates/` for consistent session start/end artifacts:
+
+- `ISSUE-COMMENT-TEMPLATES.md` — required DISCOVERY/BLOCK/DONE/REVIEW comment formats
+- `LESSONS-TEMPLATE.md` — required retrospective capture after PR merge (issue document key `retro`)
+- `BUILD-JOURNAL-TEMPLATE.md` — recommended for complex debugging/build runs
+
+See `harness/templates/README.md` for workflow integration guidance.
 
 ### Agent config setup
 

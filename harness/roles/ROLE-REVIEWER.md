@@ -14,7 +14,9 @@ Protect quality gates by validating scope, correctness, and maintainability befo
 
 - `harness/spec-driven.md`
 - `harness/tdd-standards.md`
-- `harness/protocol.md`
+- `harness/protocol.md` (Lifecycle States, Review Summary format)
+- `harness/templates/ISSUE-COMMENT-TEMPLATES.md`
+- `harness/templates/PR-CHECKLIST.md`
 
 ## Responsibilities
 

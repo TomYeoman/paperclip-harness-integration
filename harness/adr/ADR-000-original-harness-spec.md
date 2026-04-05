@@ -106,7 +106,6 @@ Exact paths and casing for cross-references — use these, do not guess:
 - agents/TDD-STANDARDS.md
 - agents/AGENT-COMMUNICATION-PROTOCOL.md
 - agents/templates/RETRO-TEMPLATE.md
-- agents/templates/LAUNCH-SCRIPT-TEMPLATE.md
 - docs/PRODUCT-BRIEF.md              (generated from Part A product discovery answers)
 - docs/BUILD-JOURNAL.md              (NOT tasks/)
 - docs/LAUNCH-SCRIPT.md             (overwritten each session — not appended)
@@ -153,7 +152,6 @@ agents/
     SKILL-github-pr-workflow.md    # Branch, commit, push, PR lifecycle
   templates/
     RETRO-TEMPLATE.md              # Milestone retrospective format
-    LAUNCH-SCRIPT-TEMPLATE.md      # Next-session startup guide format
 tasks/
   MILESTONES.md                    # Sequential milestone definitions
   lessons.md                       # Raw lesson log (starts with example entry)
@@ -752,7 +750,7 @@ PR lifecycle. Include:
 - Agent performance notes
 - Carry-forward items
 
-**LAUNCH-SCRIPT-TEMPLATE.md** — Next-session startup guide with placeholders for:
+**Startup guide template** — Next-session startup guide with placeholders for:
 
 - Open PRs with status and action instructions — include one filled-in example row (e.g., "PR #12 | feature/calendar-sync | Reviewer requested changes | Fix detekt complexity violation in FreeSlotCalculator.kt:42")
 - Open issues
@@ -840,7 +838,7 @@ After generating all files, complete the first-boot sequence:
 
 ### 3a. Write the Initial Launch Script
 
-Write `docs/LAUNCH-SCRIPT.md` using the format from `agents/templates/LAUNCH-SCRIPT-TEMPLATE.md` with first-boot content:
+Write `docs/LAUNCH-SCRIPT.md` using the startup guide template format with first-boot content:
 
 - **Current milestone:** M0: Project Scaffold
 - **Previous session:** None — first session
