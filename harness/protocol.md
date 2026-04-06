@@ -28,6 +28,7 @@ Every agent action maps to a Paperclip primitive:
 | Queued for merge (queue enabled) | Issue stays `in_review` + `QUEUE:` evidence comment |
 | Merged (queue disabled) | Issue → `done` |
 | Merge confirmed (queue enabled) | `CONFIRMED-D:` evidence comment + issue → `done` |
+| Lesson discovered during execution | Post `L:` issue comment + capture lesson entry |
 | Need decision | Issue → `blocked` (unblocker = named in comment) |
 
 ## Token Economy Rules
@@ -86,6 +87,31 @@ When target repo uses merge queue:
 When merge queue is not enabled:
 
 - keep direct merge flow; approved + merged PR may transition directly to `done`.
+
+## Learning Event Capture Rule
+
+Learning events must be captured immediately when discovered.
+
+Rules:
+
+1. Post an `L:` issue comment in the same heartbeat/session when the lesson is observed.
+2. Use the lesson event template (`harness/templates/LESSON-EVENT-TEMPLATE.md`) for structure.
+3. Do not batch multiple lessons only at end-of-session.
+4. Before closing the issue, ensure `retro` issue document includes the captured lessons.
+
+Required evidence chain:
+
+- `L:` issue comment
+- template-backed lesson event entry
+- `retro` issue document update at completion
+
+## Milestone Acceptance Gate Rule
+
+For architecture-impacting or milestone parent issues:
+
+1. Include `Related ADRs` in issue/spec artifacts.
+2. Post `MILESTONE-GATE:` evidence comment before transition to `done`.
+3. Gate evidence must list acceptance criteria, verification outcomes, and unresolved risks.
 
 ## Block Comment Format
 
