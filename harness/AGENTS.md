@@ -12,10 +12,17 @@ This file is the runtime-agnostic contract for harness work in this repository.
 
 - Edit repository code only in `/workspace`.
 - Primary context sources:
+  - `harness/CANONICAL-SOURCES.md`
   - `harness/adr/ADR-000-original-harness-spec.md`
   - `harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md`
   - `harness/adr/ADR-002-paperclip-issues-execution-plan.md`
   - Current issue description/comments/documents
+
+## Canonical Precedence
+
+- Runtime behavior is defined by canonical harness docs listed in `harness/CANONICAL-SOURCES.md`.
+- Human-reference architecture docs under `harness/docs/architecture/` are explanatory and non-authoritative.
+- If conflicts exist, canonical runtime docs win.
 
 ## Governance Documents (HARA-7)
 
