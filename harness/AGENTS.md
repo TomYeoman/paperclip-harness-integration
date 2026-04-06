@@ -12,16 +12,25 @@ This file is the runtime-agnostic contract for harness work in this repository.
 
 - Edit repository code only in `/workspace`.
 - Primary context sources:
+  - `harness/CANONICAL-SOURCES.md`
   - `harness/adr/ADR-000-original-harness-spec.md`
   - `harness/adr/ADR-001-agentic-harness-paperclip-adaptation.md`
   - `harness/adr/ADR-002-paperclip-issues-execution-plan.md`
   - Current issue description/comments/documents
 
+## Canonical Precedence
+
+- Runtime behavior is defined by canonical harness docs listed in `harness/CANONICAL-SOURCES.md`.
+- Human-reference architecture docs under `harness/docs/architecture/` are explanatory and non-authoritative.
+- If conflicts exist, canonical runtime docs win.
+
 ## Governance Documents (HARA-7)
 
-- `harness/protocol.md` — communication protocol and status mapping
+- `harness/protocol.md` — communication protocol, lifecycle states, status mapping
 - `harness/spec-driven.md` — spec chain policy and ambiguity handling
 - `harness/tdd-standards.md` — TDD rules, fakes-over-mocks, anti-patterns
+- `harness/templates/ISSUE-COMMENT-TEMPLATES.md` — standardized comment formats
+- `harness/templates/PR-CHECKLIST.md` — PR checklist for workflow changes
 
 ## Execution Model
 
@@ -35,10 +44,13 @@ This file is the runtime-agnostic contract for harness work in this repository.
 1. Confirm correct issue (`HARA-*`) and acceptance criteria.
 2. Run discovery before code changes.
 3. Claim work via checkout and move to `in_progress`.
-4. Implement in `/workspace` on a task branch.
-5. Open PR with issue reference.
-6. Move issue to `in_review` when PR is ready.
-7. After review and merge, move issue to `done` with final summary.
+4. Capture lessons immediately as they are discovered (`L:` comment, no batching).
+5. Implement in `/workspace` on a task branch.
+6. Open PR with issue reference.
+7. Move issue to `in_review` when PR is ready.
+8. If merge queue is enabled, keep issue `in_review` while PR is queued and post a `QUEUE:` evidence comment.
+9. After merge is confirmed, post `CONFIRMED-D:` evidence and move issue to `done` with final summary.
+10. After merge, update issue document `retro` using `harness/templates/LESSONS-TEMPLATE.md`.
 
 ## Discovery Gate (Must Be Posted In Issue)
 
@@ -77,6 +89,7 @@ R: yes | blocked:<reason>
 - Reviewer never merges.
 - CEO/Lead orchestrates and unblocks; does not merge code changes.
 - Reviewer must post an approve/block summary in the issue thread.
+- Queue-enabled repos: queued PRs do not qualify for `done` until merge confirmation evidence is posted.
 
 ## Verification Gate (Before Done)
 
@@ -86,6 +99,9 @@ Before marking complete, verify and report:
 2. Relevant tests/checks run (or explicitly not run with reason).
 3. Diff self-review completed.
 4. PR link posted in issue.
+5. If merge queue is enabled, include `QUEUE:` and `CONFIRMED-D:` evidence before closing.
+6. `L:` lesson events are captured and reflected in issue document `retro`.
+7. For milestone/architecture-impacting work, `Related ADRs` and gate evidence are present.
 
 Use this completion block in the issue comment:
 
