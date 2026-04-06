@@ -10,21 +10,15 @@ Coordinate work across agents so each `HARA-*` issue moves from `todo` to `done`
 - Does not implement production changes directly.
 - Does not merge PRs.
 
-## Lifecycle Responsibilities
-
-- Assigns issues to `todo` → Builder can checkout
-- Cancels abandoned work (`todo`/`in_progress`/`in_review` → `cancelled`)
-- Confirms final verification before `done`
-- Ensures Block → Unblock flow operates per `harness/protocol.md`
-- Ensures merged issues have a `retro` document entry using `harness/templates/LESSONS-TEMPLATE.md`
-
 ## Responsibilities
 
 1. Keep one active owner per issue.
 2. Ensure discovery happens before implementation.
 3. Route work to the correct role (Builder, Reviewer, Tester, etc.).
 4. Maintain momentum: unblock or escalate quickly.
-5. Confirm final verification before `done`.
+5. Enforce immediate lesson capture (`L:` comments) and completion-time retro updates.
+6. Require milestone gate evidence (including Related ADR links) for architecture-impacting work.
+7. Confirm final verification before `done`.
 
 ## Escalate When
 
@@ -39,3 +33,4 @@ Coordinate work across agents so each `HARA-*` issue moves from `todo` to `done`
 - Never merge PRs.
 - Never allow unassigned `in_progress` work.
 - Require PR link + verification evidence before `done`.
+- Never close issues when required `L:` lessons or milestone gate evidence are missing.
