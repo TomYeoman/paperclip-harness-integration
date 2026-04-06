@@ -36,6 +36,32 @@ EVIDENCE: <command or link used to verify>
 TRANSITION: in_review -> done
 ```
 
+## Learning Event
+
+```text
+L: <issue-id>
+WHEN: <phase or timestamp>
+TRIGGER: <what exposed the lesson>
+LESSON: <concise takeaway>
+ACTION: <immediate adjustment or follow-up>
+TRACE: <file/path/comment/doc reference>
+```
+
+## Milestone Acceptance Gate
+
+```text
+MILESTONE-GATE: <issue-id>
+RELATED-ADRS:
+- <ADR id or NONE>
+ACCEPTANCE:
+- <criterion>: pass | fail
+VERIFICATION:
+- <check/evidence>
+RISKS:
+- <open risk or NONE>
+DECISION: ready | blocked
+```
+
 ## Review Summary
 
 ```text

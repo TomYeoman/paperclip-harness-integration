@@ -37,11 +37,13 @@ This file is the runtime-agnostic contract for harness work in this repository.
 1. Confirm correct issue (`HARA-*`) and acceptance criteria.
 2. Run discovery before code changes.
 3. Claim work via checkout and move to `in_progress`.
-4. Implement in `/workspace` on a task branch.
-5. Open PR with issue reference.
-6. Move issue to `in_review` when PR is ready.
-7. If merge queue is enabled, keep issue `in_review` while PR is queued and post a `QUEUE:` evidence comment.
-8. After merge is confirmed, post `CONFIRMED-D:` evidence and move issue to `done` with final summary.
+4. Capture lessons immediately as they are discovered (`L:` comment, no batching).
+5. Implement in `/workspace` on a task branch.
+6. Open PR with issue reference.
+7. Move issue to `in_review` when PR is ready.
+8. If merge queue is enabled, keep issue `in_review` while PR is queued and post a `QUEUE:` evidence comment.
+9. After merge is confirmed, post `CONFIRMED-D:` evidence and move issue to `done` with final summary.
+10. After merge, update issue document `retro` using `harness/templates/LESSONS-TEMPLATE.md`.
 
 ## Discovery Gate (Must Be Posted In Issue)
 
@@ -91,6 +93,8 @@ Before marking complete, verify and report:
 3. Diff self-review completed.
 4. PR link posted in issue.
 5. If merge queue is enabled, include `QUEUE:` and `CONFIRMED-D:` evidence before closing.
+6. `L:` lesson events are captured and reflected in issue document `retro`.
+7. For milestone/architecture-impacting work, `Related ADRs` and gate evidence are present.
 
 Use this completion block in the issue comment:
 

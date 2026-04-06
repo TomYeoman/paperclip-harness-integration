@@ -45,6 +45,10 @@ Issue documents with key `spec` follow this structure:
 ```markdown
 # Feature: [Name]
 
+## Related ADRs
+
+- ADR-XXX - [title] (or `NONE` if no architecture impact)
+
 ## Behavior
 
 1. [Observable behavior in domain language]
@@ -60,6 +64,8 @@ Issue documents with key `spec` follow this structure:
 - [ ] [Criterion 1]
 - [ ] [Criterion 2]
 ```
+
+For architecture-impacting issues, `Related ADRs` is required and must reference specific ADR IDs.
 
 ## Ambiguity Protocol
 
@@ -137,3 +143,11 @@ Reviewer checks:
 3. Test names use spec language
 4. No gold-plating (implementation does not exceed spec)
 5. Interface files exist and are referenced by tests
+
+## Milestone Acceptance Gate
+
+For milestone parent issues and architecture-impacting changes, include explicit gate evidence before close:
+
+1. `Related ADRs` section is populated.
+2. `MILESTONE-GATE:` comment is posted with pass/fail acceptance evidence.
+3. Remaining risks are documented with owner and follow-up path.
