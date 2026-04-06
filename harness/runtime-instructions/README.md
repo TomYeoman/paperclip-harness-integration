@@ -12,3 +12,22 @@ Pattern:
 
 - each role has `harness/runtime-instructions/<role>/AGENTS.md`
 - that file points to shared core + one role contract
+
+Available entrypoints:
+
+- `ceo/AGENTS.md`
+- `builder/AGENTS.md`
+- `reviewer/AGENTS.md`
+- `tester/AGENTS.md`
+- `architect/AGENTS.md`
+- `auditor/AGENTS.md`
+- `pm/AGENTS.md`
+- `qe/AGENTS.md`
+- `contract-tester/AGENTS.md`
+- `integration-tester/AGENTS.md`
+- `security-researcher/AGENTS.md`
+- `security-reviewer/AGENTS.md`
+
+Entrypoint rule:
+
+- every entrypoint must require reads of `/workspace/harness/AGENTS.md` and exactly one role contract file.

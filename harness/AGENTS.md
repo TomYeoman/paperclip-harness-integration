@@ -119,6 +119,8 @@ Escalate in issue comments when:
 
 Recommended core setup: CEO + Builder + Reviewer + Architect (+ Tester when you want explicit acceptance coverage). Add Auditor as the final role.
 
+Expanded parity setup (opt-in): use `HARNESS_ROLE_SET=parity` to provision PM, QE, Contract Tester, Integration Tester, Security Researcher, and Security Reviewer in addition to the core/full roles.
+
 Role contract files:
 
 - `harness/roles/ROLE-LEAD.md`
@@ -127,6 +129,12 @@ Role contract files:
 - `harness/roles/ROLE-REVIEWER.md`
 - `harness/roles/ROLE-TESTER.md`
 - `harness/roles/ROLE-AUDITOR.md`
+- `harness/roles/ROLE-PM.md`
+- `harness/roles/ROLE-QE.md`
+- `harness/roles/ROLE-CONTRACT-TESTER.md`
+- `harness/roles/ROLE-INTEGRATION-TESTER.md`
+- `harness/roles/ROLE-SECURITY-RESEARCHER.md`
+- `harness/roles/ROLE-SECURITY-REVIEWER.md`
 
 Adapter overlay docs (runtime-specific behavior):
 
