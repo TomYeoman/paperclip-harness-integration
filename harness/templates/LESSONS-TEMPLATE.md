@@ -1,6 +1,6 @@
 # Lessons Learned Template
 
-Use this template to capture lessons after completing issues or significant milestones.
+Use this template to update issue document key `retro` before issue close.
 
 ## Issue Reference
 
@@ -9,26 +9,20 @@ Use this template to capture lessons after completing issues or significant mile
 - **Completed**: YYYY-MM-DD
 - **PR**: <!-- URL or NONE -->
 
+## Lesson Events Captured During Execution
+
+| Event | Trigger | Lesson | Action Taken | Trace |
+|-------|---------|--------|--------------|-------|
+| `L-1` | <!-- trigger --> | <!-- takeaway --> | <!-- action --> | <!-- issue comment/doc link --> |
+
 ## What Worked Well
 
-- <!-- Positive outcome 1 -->
-- <!-- Positive outcome 2 -->
+- <!-- positive outcome -->
 
-## What Could Be Improved
+## What Needs Improvement
 
-- <!-- Improvement area 1 -->
-- <!-- Improvement area 2 -->
+- <!-- improvement -->
 
-## Specific Lessons
+## Follow-up Actions
 
-| Situation | Lesson | Application |
-|-----------|--------|-------------|
-| <!-- Context --> | <!-- Takeaway --> | <!-- How to apply --> |
-
-## Process Improvements Identified
-
-<!-- Suggestions for harness process, templates, or scripts -->
-
-## Related Documentation
-
-- <!-- File or doc that should be updated -->
+- <!-- concrete next action -->
