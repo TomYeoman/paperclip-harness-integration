@@ -14,6 +14,7 @@ Use this checklist for any PR that changes harness behavior, workflow, or Paperc
 - [ ] **Evidence posted:** PR URL is posted back to the Paperclip issue comments.
 - [ ] **Review summary on issue:** Reviewer posted approve/block summary in the issue thread.
 - [ ] **GitHub preflight passed:** `harness/scripts/setup-harness-github.sh` succeeded in the runtime environment.
+- [ ] **Queue lifecycle evidence:** For merge-queue repos, `QUEUE:` and `CONFIRMED-D:` issue comments are posted before closing the issue.
 
 ## Automation policy checks
 
@@ -26,6 +27,7 @@ Use this checklist for any PR that changes harness behavior, workflow, or Paperc
 - [ ] `instructionsFilePath` behavior remains role-isolated (runtime entrypoint pattern).
 - [ ] Shared governance remains in `harness/AGENTS.md`; role specifics remain in `harness/roles/ROLE-*.md`.
 - [ ] `/workspace` execution assumptions remain correct for Docker-based local runs.
+- [ ] Queue-aware close rule is preserved (`queued` remains `in_review` until merge confirmation).
 
 ## Validation
 

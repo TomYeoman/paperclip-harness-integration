@@ -25,7 +25,9 @@ Every agent action maps to a Paperclip primitive:
 | Blocked | Issue status → `blocked` + comment |
 | Implementation done | PR opened, issue → `in_review` |
 | Review feedback | Issue comment on PR |
-| Merged | Issue → `done` |
+| Queued for merge (queue enabled) | Issue stays `in_review` + `QUEUE:` evidence comment |
+| Merged (queue disabled) | Issue → `done` |
+| Merge confirmed (queue enabled) | `CONFIRMED-D:` evidence comment + issue → `done` |
 | Need decision | Issue → `blocked` (unblocker = named in comment) |
 
 ## Token Economy Rules
@@ -70,6 +72,20 @@ SELF-AUDIT:
 - <criterion>: pass | fail
 PR: <url or NONE>
 ```
+
+## Merge Queue Lifecycle Rule
+
+When target repo uses merge queue:
+
+1. Builder queues merge (for example via `gh pr merge --merge --auto`).
+2. Issue remains `in_review` while PR state is queued-only.
+3. Builder posts `QUEUE:` evidence in issue comments.
+4. Transition to `done` is allowed only after merge confirmation.
+5. Builder posts `CONFIRMED-D:` evidence and then moves issue to `done`.
+
+When merge queue is not enabled:
+
+- keep direct merge flow; approved + merged PR may transition directly to `done`.
 
 ## Block Comment Format
 
