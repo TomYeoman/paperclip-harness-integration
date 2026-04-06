@@ -31,3 +31,4 @@ Available entrypoints:
 Entrypoint rule:
 
 - every entrypoint must require reads of `/workspace/harness/AGENTS.md` and exactly one role contract file.
+- runtime entrypoints must rely on canonical sources (see `/workspace/harness/CANONICAL-SOURCES.md`) and must not treat human-reference architecture docs as authoritative.
