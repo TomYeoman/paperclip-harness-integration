@@ -17,6 +17,7 @@ Use this checklist for any PR that changes harness behavior, workflow, or Paperc
 - [ ] **Queue lifecycle evidence:** For merge-queue repos, `QUEUE:` and `CONFIRMED-D:` issue comments are posted before closing the issue.
 - [ ] **Learning evidence chain:** `L:` event comments are present and reflected in issue `retro` document updates.
 - [ ] **Milestone gate evidence:** Architecture-impacting work includes `Related ADRs` and `MILESTONE-GATE:` acceptance evidence.
+- [ ] **Manual parity scenarios executed:** `harness/testing/HARA-12-manual-test-scenarios.md` and `harness/testing/HARA-12-assertion-matrix.md` are updated with current pass/fail evidence.
 
 ## Automation policy checks
 

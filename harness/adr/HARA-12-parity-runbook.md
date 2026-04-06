@@ -148,11 +148,21 @@ This runbook tracks parity status for each ADR-003 domain.
 
 ## 12) Manual testing + assertions
 
-- status: pending-HARA-12F
-- files changed: pending
-- wiring applied: pending scenario + assertion docs and execution evidence
+- status: implemented-partial-execution
+- files changed:
+  - `harness/testing/HARA-12-manual-test-scenarios.md`
+  - `harness/testing/HARA-12-assertion-matrix.md`
+  - `harness/templates/PR-CHECKLIST.md`
+- wiring applied:
+  - required 7-scenario manual suite documented with explicit evidence requirements
+  - assertion matrix added with pass/fail/not-run tracking for queue-enabled and queue-disabled paths
+  - PR checklist now requires manual parity scenario evidence updates
 - verification evidence:
-  - completion tracked in `harness/testing/HARA-12-manual-test-scenarios.md` and `harness/testing/HARA-12-assertion-matrix.md` (added in HARA-12F)
+  - `harness/testing/HARA-12-manual-test-scenarios.md`
+  - `harness/testing/HARA-12-assertion-matrix.md`
+  - dedicated test company: `d48d56c4-46d6-4da6-adfa-ae8e282fdf65`
+  - executed scenarios: #2 pass, #5 pass, #6 pass, #7 pass
+  - pending scenarios: #1, #3, #4
 
 ## 13) Human-readable documentation migration
 
@@ -174,7 +184,7 @@ This runbook tracks parity status for each ADR-003 domain.
 
 ## Current Parity Claim State
 
-- implemented domains: 1, 5, 9, 10, 11, 13
+- implemented domains: 1, 5, 9, 10, 11, 12 (partial execution), 13
 - native no-op domains: 2, 3, 4, 6 (explicit rationale recorded)
 - deferred domains: 7, 8 (ADR-defined defer rationale recorded)
-- pending execution domain: 12 (completed in HARA-12F)
+- pending execution detail: scenarios 1, 3, 4 remain pending (PR/merge-queue dependent); scenarios 2, 5, 6, 7 validated in dedicated test company
