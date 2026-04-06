@@ -129,10 +129,10 @@ Expected evidence:
 
 | Scenario | Result (pass/fail/not-run) | Evidence refs |
 | --- | --- | --- |
-| 1 | not-run | pending full merge cycle in dedicated test company |
+| 1 | pass | company `d48d56c4-46d6-4da6-adfa-ae8e282fdf65`, issue `HARAA-3` (`todo -> in_progress -> in_review -> done`) with PR/review evidence |
 | 2 | pass | company `d48d56c4-46d6-4da6-adfa-ae8e282fdf65`, issue `HARAA-2` (`todo -> in_progress -> blocked -> in_progress -> done`) |
 | 3 | not-run | requires merge-queue-enabled test repo |
-| 4 | not-run | pending direct-merge test run |
+| 4 | pass | direct merge evidence on PR `#4` (`57331d8580d033a854a49916bd3be9663ceff3d9`) and issue `HARAA-3` non-queue close |
 | 5 | pass | `setup-harness-agent-configs.sh` run with `HARNESS_ROLE_SET=parity` in company `d48d56c4-46d6-4da6-adfa-ae8e282fdf65` |
 | 6 | pass | issue `HARAA-2` has `L:` comment and `retro` document (`id=91c87065-564a-4393-8b47-726b0972c8ae`) before close |
 | 7 | pass | `harness/runtime-instructions/README.md`, `harness/CANONICAL-SOURCES.md`, `harness/docs/architecture/*.md` |
@@ -141,4 +141,5 @@ Expected evidence:
 
 - dedicated test company used: `d48d56c4-46d6-4da6-adfa-ae8e282fdf65` (`Harness Parity Validation 2026-04-06`)
 - scenario 2 attempted agent checkout on `HARAA-1`, but encountered active run lock conflict (`executionRunId` already set), so lifecycle validation continued on `HARAA-2` via board-driven transitions in the isolated test company
+- scenario 1 and scenario 4 were completed on `HARAA-3` with PR `#4` review + direct-merge evidence (`mergedAt=2026-04-06T21:55:48Z`)
 - parity provisioning validated via API agent listing for PM/QE/Contract Tester/Integration Tester/Security Researcher/Security Reviewer and expected `instructionsFilePath` values
