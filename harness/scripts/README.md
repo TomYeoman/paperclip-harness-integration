@@ -100,7 +100,7 @@ Optional:
 
 - `PAPERCLIP_API_BASE` (default `http://localhost:3100`)
 - `PAPERCLIP_COMPOSE_FILES` (comma-separated; defaults to quickstart, plus workspace override if present)
-- `HARNESS_ROLE_SET` (`minimal|core|full`, default `core`)
+- `HARNESS_ROLE_SET` (`minimal|core|full|parity`, default `core`)
 - `HARNESS_ADAPTER_TYPE` (default `opencode_local`)
 - `HARNESS_MODEL` (override auto-discovered model)
 - `HARNESS_HELLO_ISSUE_TITLE` (default `HARNESS: Hello world`)
@@ -118,3 +118,4 @@ Role set mapping:
 - `minimal`: Builder + Reviewer
 - `core`: Builder + Reviewer + Tester + Architect
 - `full`: Builder + Reviewer + Tester + Architect + Auditor
+- `parity`: All roles (Builder, Reviewer, Tester, Architect, Auditor, PM, QE, Contract Tester, Integration Tester, Security Researcher, Security Reviewer)

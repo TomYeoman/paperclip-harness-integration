@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: 'nuget'
+    directory: '/backend/rewe-mapping-service'
+    schedule:
+      interval: 'weekly'
+
+  - package-ecosystem: 'npm'
+    directory: '/backend/rewe-pdf-pipeline'
+    schedule:
+      interval: 'weekly'
+
+  - package-ecosystem: 'npm'
+    directory: '/consumer-web'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 10
+    dependency-type: 'all'

@@ -1,0 +1,15 @@
+[submodule "consumer-web"]
+	path = consumer-web
+	url = git@github.je-labs.com:Web/consumer-web.git
+[submodule "ios"]
+	path = ios
+	url = git@github.je-labs.com:iOS/JustEat.git
+[submodule "android"]
+	path = android
+	url = git@github.je-labs.com:Android/app-core.git
+[submodule "order-amendments"]
+	path = order-amendments
+	url = https://github.je-labs.com/jetconnect/order-amendments
+[submodule "consumer-offers-api"]
+	path = consumer-offers-api
+	url = https://github.je-labs.com/Offers/JE.ConsumerOffers.API

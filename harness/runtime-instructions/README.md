@@ -12,3 +12,18 @@ Pattern:
 
 - each role has `harness/runtime-instructions/<role>/AGENTS.md`
 - that file points to shared core + one role contract
+
+## Available Roles
+
+- `ceo` - CEO/Lead runtime instructions
+- `builder` - Builder runtime instructions
+- `reviewer` - Reviewer runtime instructions
+- `tester` - Tester runtime instructions
+- `architect` - Architect runtime instructions
+- `auditor` - Auditor runtime instructions
+- `pm` - PM runtime instructions
+- `qe` - QE runtime instructions
+- `contract-tester` - Contract Tester runtime instructions
+- `integration-tester` - Integration Tester runtime instructions
+- `security-researcher` - Security Researcher runtime instructions
+- `security-reviewer` - Security Reviewer runtime instructions

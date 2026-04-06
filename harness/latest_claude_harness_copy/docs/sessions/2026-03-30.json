@@ -1,0 +1,35 @@
+{
+  "session": "2026-03-30",
+  "date": "2026-03-30",
+  "duration_hours": 0.33,
+  "health_pct": 95,
+  "prs_merged": [
+    {"number": 610, "title": "harness(609): fix journal ordering + backfill session records", "issue": 609}
+  ],
+  "prs_open": [
+    {"number": 600, "title": "harness(599): Grafana dashboard improvements", "issue": 599, "status": "open — awaiting PO merge"}
+  ],
+  "issues_created": [609],
+  "issues_closed": [608, 609],
+  "agent_spawns": {
+    "total": 1,
+    "builders": 1,
+    "reviewers": 0,
+    "auditors": 0,
+    "other": 0
+  },
+  "lessons_encoded": 0,
+  "spawn_to_d_ratio": "1/1",
+  "b_rate": "0/1",
+  "avg_pr_cycle_time_min": 15,
+  "avg_loops_per_pr": 1.5,
+  "coord_overhead_pct": 30,
+  "vfte_hours": null,
+  "efficiency_multiplier": null,
+  "key_decisions": [
+    "docs/sessions/ wired into CLAUDE.md SESSION END step 9 — now a mandatory gate alongside BUILD-JOURNAL.md",
+    "Backfilled all 28 sessions (2026-03-13 through 2026-03-28) with JSON records — early sessions have nulls for unknowns",
+    "BUILD-JOURNAL.md ordering fixed: 2026-03-24 and 2026-03-24c moved from bottom of file to correct chronological position"
+  ],
+  "open_issues_needing_encoding": []
+}

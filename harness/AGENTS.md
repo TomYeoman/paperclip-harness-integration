@@ -135,6 +135,12 @@ Role contract files:
 - `harness/roles/ROLE-REVIEWER.md`
 - `harness/roles/ROLE-TESTER.md`
 - `harness/roles/ROLE-AUDITOR.md`
+- `harness/roles/ROLE-PM.md`
+- `harness/roles/ROLE-QE.md`
+- `harness/roles/ROLE-CONTRACT-TESTER.md`
+- `harness/roles/ROLE-INTEGRATION-TESTER.md`
+- `harness/roles/ROLE-SECURITY-RESEARCHER.md`
+- `harness/roles/ROLE-SECURITY-REVIEWER.md`
 
 Adapter overlay docs (runtime-specific behavior):
 

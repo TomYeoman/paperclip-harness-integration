@@ -1,0 +1,37 @@
+name: rewe-mapping-service CI
+
+on:
+  push:
+    paths:
+      - 'backend/rewe-mapping-service/**'
+  pull_request:
+    paths:
+      - 'backend/rewe-mapping-service/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/rewe-mapping-service
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore src/ReweMappingService/ReweMappingService.csproj
+
+      - name: NuGet security audit
+        run: dotnet nuget audit --severity high
+        working-directory: backend/rewe-mapping-service
+
+      - name: Build
+        run: dotnet build src/ReweMappingService/ReweMappingService.csproj --no-restore
+
+      - name: Test
+        run: dotnet test tests/ReweMappingService.Tests/ReweMappingService.Tests.csproj --no-build --verbosity normal

@@ -22,6 +22,12 @@ export HARNESS_REVIEWER_NAME="${HARNESS_REVIEWER_NAME:-Harness Reviewer}"
 export HARNESS_TESTER_NAME="${HARNESS_TESTER_NAME:-Harness Tester}"
 export HARNESS_ARCHITECT_NAME="${HARNESS_ARCHITECT_NAME:-Harness Architect}"
 export HARNESS_AUDITOR_NAME="${HARNESS_AUDITOR_NAME:-Harness Auditor}"
+export HARNESS_PM_NAME="${HARNESS_PM_NAME:-Harness PM}"
+export HARNESS_QE_NAME="${HARNESS_QE_NAME:-Harness QE}"
+export HARNESS_CONTRACT_TESTER_NAME="${HARNESS_CONTRACT_TESTER_NAME:-Harness Contract Tester}"
+export HARNESS_INTEGRATION_TESTER_NAME="${HARNESS_INTEGRATION_TESTER_NAME:-Harness Integration Tester}"
+export HARNESS_SECURITY_RESEARCHER_NAME="${HARNESS_SECURITY_RESEARCHER_NAME:-Harness Security Researcher}"
+export HARNESS_SECURITY_REVIEWER_NAME="${HARNESS_SECURITY_REVIEWER_NAME:-Harness Security Reviewer}"
 
 node <<'NODE'
 const base = process.env.PAPERCLIP_API_BASE.replace(/\/+$/, "");
@@ -43,6 +49,12 @@ const agentNames = {
   tester: process.env.HARNESS_TESTER_NAME || "Harness Tester",
   architect: process.env.HARNESS_ARCHITECT_NAME || "Harness Architect",
   auditor: process.env.HARNESS_AUDITOR_NAME || "Harness Auditor",
+  pm: process.env.HARNESS_PM_NAME || "Harness PM",
+  qe: process.env.HARNESS_QE_NAME || "Harness QE",
+  contractTester: process.env.HARNESS_CONTRACT_TESTER_NAME || "Harness Contract Tester",
+  integrationTester: process.env.HARNESS_INTEGRATION_TESTER_NAME || "Harness Integration Tester",
+  securityResearcher: process.env.HARNESS_SECURITY_RESEARCHER_NAME || "Harness Security Researcher",
+  securityReviewer: process.env.HARNESS_SECURITY_REVIEWER_NAME || "Harness Security Reviewer",
 };
 
 async function request(method, path, body) {
@@ -149,6 +161,83 @@ function desiredRoleSpecs() {
     );
   }
 
+  if (roleSet === "parity") {
+    baseSpecs.push(
+      {
+        key: "tester",
+        name: agentNames.tester,
+        role: "qa",
+        title: "Harness Tester",
+        capabilities: "Validates acceptance and regression behavior for HARA tasks.",
+        instructionsPath: "/workspace/harness/runtime-instructions/tester/AGENTS.md",
+      },
+      {
+        key: "architect",
+        name: agentNames.architect,
+        role: "engineer",
+        title: "Harness Architect",
+        capabilities: "Defines interfaces and design constraints for harness evolution.",
+        instructionsPath: "/workspace/harness/runtime-instructions/architect/AGENTS.md",
+      },
+      {
+        key: "auditor",
+        name: agentNames.auditor,
+        role: "researcher",
+        title: "Harness Auditor",
+        capabilities: "Performs risk and governance audits for harness operations.",
+        instructionsPath: "/workspace/harness/runtime-instructions/auditor/AGENTS.md",
+      },
+      {
+        key: "pm",
+        name: agentNames.pm,
+        role: "lead",
+        title: "Harness PM",
+        capabilities: "Owns acceptance criteria, prioritization, and backlog management for harness work.",
+        instructionsPath: "/workspace/harness/runtime-instructions/pm/AGENTS.md",
+      },
+      {
+        key: "qe",
+        name: agentNames.qe,
+        role: "qa",
+        title: "Harness QE",
+        capabilities: "Owns test strategies, test coverage validation, and regression prevention for harness work.",
+        instructionsPath: "/workspace/harness/runtime-instructions/qe/AGENTS.md",
+      },
+      {
+        key: "contractTester",
+        name: agentNames.contractTester,
+        role: "qa",
+        title: "Harness Contract Tester",
+        capabilities: "Validates API contracts and integration boundaries for harness components.",
+        instructionsPath: "/workspace/harness/runtime-instructions/contract-tester/AGENTS.md",
+      },
+      {
+        key: "integrationTester",
+        name: agentNames.integrationTester,
+        role: "qa",
+        title: "Harness Integration Tester",
+        capabilities: "Validates end-to-end workflows and cross-component behavior for harness work.",
+        instructionsPath: "/workspace/harness/runtime-instructions/integration-tester/AGENTS.md",
+      },
+      {
+        key: "securityResearcher",
+        name: agentNames.securityResearcher,
+        role: "researcher",
+        title: "Harness Security Researcher",
+        capabilities: "Identifies vulnerabilities and defines security requirements for harness work.",
+        instructionsPath: "/workspace/harness/runtime-instructions/security-researcher/AGENTS.md",
+      },
+      {
+        key: "securityReviewer",
+        name: agentNames.securityReviewer,
+        role: "qa",
+        title: "Harness Security Reviewer",
+        capabilities: "Validates security implementations and ensures security standards for harness work.",
+        instructionsPath: "/workspace/harness/runtime-instructions/security-reviewer/AGENTS.md",
+      },
+    );
+  }
+
   return baseSpecs;
 }
 
@@ -193,8 +282,8 @@ async function upsertRoleAgent(existingAgents, ceoId, model, spec) {
 }
 
 async function main() {
-  if (!["minimal", "core", "full"].includes(roleSet)) {
-    throw new Error(`HARNESS_ROLE_SET must be one of: minimal, core, full (got ${roleSet})`);
+  if (!["minimal", "core", "full", "parity"].includes(roleSet)) {
+    throw new Error(`HARNESS_ROLE_SET must be one of: minimal, core, full, parity (got ${roleSet})`);
   }
 
   const agents = await request("GET", `/api/companies/${companyId}/agents`);

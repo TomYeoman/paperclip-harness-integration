@@ -1,0 +1,29 @@
+{
+  "_comment": "Machine-readable execution state. Updated by Builders on D:. Lead reads this FIRST at session start for live issue/PR/worktree status. MILESTONES.md is read SECOND for planning context. Builders update this file by default; only update MILESTONES.md when explicitly assigned a docs task.",
+  "last_updated": "2026-03-21",
+  "milestones": [
+    {
+      "id": "M2",
+      "name": "Loyalty Backend — NewPrice Offer Type + CSV Import",
+      "status": "PAUSED",
+      "issues": [83, 84, 85, 86, 87, 88, 89]
+    },
+    {
+      "id": "M3",
+      "name": "Loyalty Frontend — Membership Prices for All Customers",
+      "status": "PAUSED",
+      "depends_on": ["M2"],
+      "issues": [90, 91, 92, 93, 94, 95, 96, 97, 101, 102, 103, 104]
+    },
+    {
+      "id": "M4",
+      "name": "Loyalty Post-Purchase — Savings Confirmation",
+      "status": "PAUSED",
+      "depends_on": ["M2", "M3"],
+      "issues": [98, 99, 105]
+    }
+  ],
+  "active_worktrees": [],
+  "open_prs": [],
+  "blocked": []
+}

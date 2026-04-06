@@ -1,0 +1,6 @@
+.DS_STORE
+.claude/worktrees/
+.code-review-graph/graph.db
+backend/rewe-pdf-pipeline/node_modules/
+harness/otel/grafana/data/
+harness/otel/prometheus/data/

@@ -1,0 +1,71 @@
+{
+  "session": "2026-03-25b",
+  "date": "2026-03-25",
+  "duration_hours": 4.5,
+  "health_pct": 75,
+  "prs_merged": [
+    {"number": 499, "title": "harness(lessons): reformat all entries to canonical 5-field format", "issue": 495},
+    {"number": 498, "title": "harness(lead): strengthen auto-reviewer-on-V rule", "issue": 496},
+    {"number": 501, "title": "harness(lessons): fix 7 remaining non-compliant entries", "issue": 500},
+    {"number": 503, "title": "Add initial atlas skill implementation", "issue": null},
+    {"number": 506, "title": "harness(workflow): Track 3 rewrite — harness-side review cycle with PROMOTE: gate", "issue": 504}
+  ],
+  "prs_open": [],
+  "issues_created": [505, 507, 508, 509, 510],
+  "issues_closed": [495, 496, 500, 504],
+  "agent_spawns": {
+    "total": 15,
+    "builders": 8,
+    "reviewers": 4,
+    "auditors": 1,
+    "other": 2
+  },
+  "lessons_encoded": 3,
+  "spawn_to_d_ratio": "12/15",
+  "b_rate": "3/15",
+  "avg_pr_cycle_time_min": 45,
+  "avg_loops_per_pr": 2.0,
+  "coord_overhead_pct": 22,
+  "vfte_hours": 9.0,
+  "efficiency_multiplier": 2.0,
+  "key_decisions": [
+    "Track 3 rewrite: builders now fetch origin/main before branching in submodule checkouts",
+    "PROMOTE: signal added as Lead-only gate for upstream platform PRs (requires PO instruction)",
+    "Harness-side review cycle replaces immediate upstream PR in greenfield mode",
+    "shutdown_request JSON protocol documented for clean agent tab termination",
+    "lessons.md fully reformatted to canonical 5-field format (91 entries)"
+  ],
+  "m2_status": {
+    "ios": {
+      "branch": "feature/rewe-m2-tcs-ios",
+      "upstream_pr": 18894,
+      "status": "approved — blocked on PO manual merge (SERP conflict unrelated to Checkout diff)",
+      "repo": "iOS/JustEat"
+    },
+    "android": {
+      "branch": "feature/rewe-m2-tcs-android",
+      "commit": "f5f9a5d3dfb",
+      "status": "greenfield hold — ready to promote",
+      "repo": "Android/app-core"
+    },
+    "web": {
+      "branch": "feature/rewe-m2-tcs-web",
+      "commit": "f8259f1ec8",
+      "status": "greenfield hold — awaiting PO answers: (1) S13 copy text, (2) 6 pilot store IDs",
+      "repo": "Web/consumer-web"
+    },
+    "backend": {
+      "branch": "feature/rewe-m2-tcs-email",
+      "commit": "c61a8f643",
+      "status": "greenfield hold — ready to promote; needs StoreDocumentMapping:BaseUrl config per environment",
+      "repo": "consumer-transactional-sender (external clone at /private/tmp/consumer-transactional-sender)"
+    }
+  },
+  "open_issues_needing_encoding": [
+    {"number": 505, "title": "shutdown_request protocol — encode to lessons.md + ROLE-LEAD.md"},
+    {"number": 507, "title": "Builder must wait for reviewer all-clear before queuing merge"},
+    {"number": 508, "title": "Auditor Phase 2 approval — in-session report review sufficient"},
+    {"number": 509, "title": "Teammate message body failure / file workaround"},
+    {"number": 510, "title": "Harness PR review threshold — low-risk vs high-risk"}
+  ]
+}

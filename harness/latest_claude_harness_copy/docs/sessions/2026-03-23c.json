@@ -1,0 +1,23 @@
+{
+  "session": "2026-03-23c",
+  "date": "2026-03-23",
+  "wall_clock_minutes": null,
+  "prs_merged": 2,
+  "prs_queued": null,
+  "agents_spawned": 1,
+  "agents_completed": 1,
+  "agents_blocked": null,
+  "spawn_to_done_ratio": 1.0,
+  "b_rate": null,
+  "avg_loop_count_per_pr": null,
+  "avg_pr_cycle_time_minutes": null,
+  "coordination_overhead_pct": null,
+  "vfte_hours_estimate": null,
+  "vfte_efficiency": null,
+  "lessons_encoded": 1,
+  "cost_model_breakdown": {
+    "opus_spawns": 1,
+    "sonnet_spawns": 0,
+    "haiku_spawns": 0
+  }
+}

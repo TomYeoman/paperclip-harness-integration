@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "jet-datadog": {
+      "source": "git@github.je-labs.com:ai-platform/skills.git",
+      "sourceType": "git",
+      "computedHash": "719a55931dad4ae99a623016a2979376cf70c14c9adf322567a217dc0afd168f"
+    }
+  }
+}

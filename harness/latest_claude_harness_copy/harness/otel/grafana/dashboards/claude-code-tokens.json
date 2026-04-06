@@ -1,0 +1,300 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": ["claude-code", "otel"],
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Claude Code — Session Metrics",
+  "uid": "claude-code-session",
+  "version": 1,
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": { "text": "Prometheus", "value": "Prometheus" },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "refresh": 1
+      },
+      {
+        "name": "agent_type",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "query": "label_values(claude_code_tool_calls_total, agent_type)",
+        "current": { "text": "All", "value": "$__all" },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "refresh": 2,
+        "label": "Agent type"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Session Cost (USD, cumulative)",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 4 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum(claude_code_claude_code_cost_usage_USD_total)",
+        "legendFormat": "Total",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 4,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "red", "value": 2.0 }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Cost by Model",
+      "type": "bargauge",
+      "gridPos": { "x": 4, "y": 0, "w": 8, "h": 4 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum by (model) (claude_code_claude_code_cost_usage_USD_total)",
+        "legendFormat": "{{model}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "currencyUSD", "decimals": 4 }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Active Time",
+      "type": "stat",
+      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 4 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum(claude_code_claude_code_active_time_seconds_total)",
+        "legendFormat": "seconds",
+        "refId": "A"
+      }],
+      "fieldConfig": { "defaults": { "unit": "s" } },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Sessions",
+      "type": "stat",
+      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 4 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum(claude_code_claude_code_session_count_total)",
+        "legendFormat": "sessions",
+        "refId": "A"
+      }],
+      "fieldConfig": { "defaults": { "unit": "short" } },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Context Window Usage",
+      "type": "gauge",
+      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 4 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum(claude_code_claude_code_token_usage_tokens_total{type=\"input\"}) + sum(claude_code_claude_code_token_usage_tokens_total{type=\"cacheRead\"})",
+        "legendFormat": "Tokens",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "max": 200000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green",  "value": null },
+              { "color": "yellow", "value": 100000 },
+              { "color": "orange", "value": 150000 },
+              { "color": "red",    "value": 180000 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Token Usage Over Time (rate/min)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 4, "w": 14, "h": 8 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "sum by (type, model) (increase(claude_code_claude_code_token_usage_tokens_total[1m]))",
+          "legendFormat": "{{model}} {{type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "lineInterpolation": "smooth"
+          }
+        }
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["sum", "last"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Cache Hit Rate %",
+      "type": "timeseries",
+      "gridPos": { "x": 14, "y": 4, "w": 10, "h": 8 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum(claude_code_claude_code_token_usage_tokens_total{type=\"cacheRead\"}) / (sum(claude_code_claude_code_token_usage_tokens_total{type=\"input\"}) + sum(claude_code_claude_code_token_usage_tokens_total{type=\"cacheRead\"})) * 100",
+        "legendFormat": "Cache hit %",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": { "lineWidth": 2, "fillOpacity": 15 }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Tool Calls — Live (by tool, by agent type)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 12, "w": 14, "h": 8 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum by (tool, agent_type) (claude_code_tool_calls_total{agent_type=~\"$agent_type\"})",
+        "legendFormat": "{{tool}} ({{agent_type}})",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 1,
+            "stacking": { "group": "A", "mode": "normal" }
+          }
+        }
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["sum", "last"] },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Top Tools This Session",
+      "type": "bargauge",
+      "gridPos": { "x": 14, "y": 12, "w": 10, "h": 8 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sort_desc(sum by (tool) (claude_code_tool_calls_total{agent_type=~\"$agent_type\"}))",
+        "legendFormat": "{{tool}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": { "unit": "short" }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "displayMode": "gradient"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Session-End: Ground Truth Cost (USD)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 20, "w": 12, "h": 7 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sum by (session_id, agent_type) (claude_code_session_cost_usd{agent_type=~\"$agent_type\"})",
+        "legendFormat": "{{agent_type}} — {{session_id}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 4,
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 60
+          }
+        }
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["sum", "last"] }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Session-End: Tool Cost Attribution (est.)",
+      "description": "Estimated cost per tool based on session-end tool counts × avg cost per call",
+      "type": "bargauge",
+      "gridPos": { "x": 12, "y": 20, "w": 12, "h": 7 },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "expr": "sort_desc(sum by (tool) (claude_code_tool_calls_total{agent_type=~\"$agent_type\"}) / sum(claude_code_tool_calls_total{agent_type=~\"$agent_type\"}) * sum(claude_code_session_cost_usd{agent_type=~\"$agent_type\"}))",
+        "legendFormat": "{{tool}}",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 4
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "displayMode": "gradient"
+      }
+    }
+  ]
+}
