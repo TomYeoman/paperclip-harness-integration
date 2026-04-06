@@ -106,9 +106,15 @@ Optional:
 
 - `PAPERCLIP_API_BASE` (default `http://localhost:3100`)
 - `PAPERCLIP_COMPOSE_FILES` (comma-separated; defaults to quickstart, plus workspace override if present)
-- `HARNESS_ROLE_SET` (`minimal|core|full`, default `core`)
+- `HARNESS_ROLE_SET` (`minimal|core|full|parity`, default `core`)
 - `HARNESS_ADAPTER_TYPE` (default `opencode_local`)
 - `HARNESS_MODEL` (override auto-discovered model)
+- `HARNESS_PM_NAME` (default `Harness PM`)
+- `HARNESS_QE_NAME` (default `Harness QE`)
+- `HARNESS_CONTRACT_TESTER_NAME` (default `Harness Contract Tester`)
+- `HARNESS_INTEGRATION_TESTER_NAME` (default `Harness Integration Tester`)
+- `HARNESS_SECURITY_RESEARCHER_NAME` (default `Harness Security Researcher`)
+- `HARNESS_SECURITY_REVIEWER_NAME` (default `Harness Security Reviewer`)
 - `HARNESS_HELLO_ISSUE_TITLE` (default `HARNESS: Hello world`)
 - `HARNESS_GIT_DIR` (default `/workspace`)
 - `HARNESS_GITHUB_REMOTE` (default `fork`)
@@ -129,6 +135,7 @@ Role set mapping:
 - `minimal`: Builder + Reviewer
 - `core`: Builder + Reviewer + Tester + Architect
 - `full`: Builder + Reviewer + Tester + Architect + Auditor
+- `parity`: Full set + PM + QE + Contract Tester + Integration Tester + Security Researcher + Security Reviewer
 
 ## GitHub integration setup (Docker)
 
