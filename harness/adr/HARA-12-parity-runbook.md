@@ -148,7 +148,7 @@ This runbook tracks parity status for each ADR-003 domain.
 
 ## 12) Manual testing + assertions
 
-- status: implemented-suite-initialized
+- status: implemented-partial-execution
 - files changed:
   - `harness/testing/HARA-12-manual-test-scenarios.md`
   - `harness/testing/HARA-12-assertion-matrix.md`
@@ -160,6 +160,9 @@ This runbook tracks parity status for each ADR-003 domain.
 - verification evidence:
   - `harness/testing/HARA-12-manual-test-scenarios.md`
   - `harness/testing/HARA-12-assertion-matrix.md`
+  - dedicated test company: `d48d56c4-46d6-4da6-adfa-ae8e282fdf65`
+  - executed scenarios: #2 pass, #5 pass, #6 pass, #7 pass
+  - pending scenarios: #1, #3, #4
 
 ## 13) Human-readable documentation migration
 
@@ -181,7 +184,7 @@ This runbook tracks parity status for each ADR-003 domain.
 
 ## Current Parity Claim State
 
-- implemented domains: 1, 5, 9, 10, 11, 12 (suite initialized), 13
+- implemented domains: 1, 5, 9, 10, 11, 12 (partial execution), 13
 - native no-op domains: 2, 3, 4, 6 (explicit rationale recorded)
 - deferred domains: 7, 8 (ADR-defined defer rationale recorded)
-- pending execution detail: scenarios 1-6 require dedicated test-company runs; scenario 7 passes via canonical-source verification
+- pending execution detail: scenarios 1, 3, 4 remain pending (PR/merge-queue dependent); scenarios 2, 5, 6, 7 validated in dedicated test company
