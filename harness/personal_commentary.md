@@ -10,3 +10,9 @@ Cool features / points of interest:
 Features
 
 - Reviewer must post an approve/block summary in the issue thread based on the PR checklist template.
+
+TODO (merge queue parity gap)
+
+- Provision a merge-queue-enabled test repository and token with branch-protection read + PR write permissions.
+- Run the real queue lifecycle scenario end-to-end (`QUEUE` hold in `in_review` + `CONFIRMED-D` before `done`).
+- Capture evidence (issue id, PR url, queue state, merge commit) and update `harness/testing/HARA-12-assertion-matrix.md` + `harness/adr/HARA-12-parity-runbook.md`.

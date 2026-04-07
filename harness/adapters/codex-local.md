@@ -36,9 +36,20 @@ Codex uses a global skills directory (`$CODEX_HOME/skills` or `~/.codex/skills`)
 | Config Field | Value |
 |--------------|-------|
 | `model` | Optional; defaults to `gpt-5.3-codex` |
+| `modelReasoningEffort` | Optional; `minimal|low|medium|high|xhigh` |
 | Script override | `HARNESS_MODEL=gpt-5.3-codex` |
+| Script effort override | `HARNESS_MODEL_REASONING_EFFORT=high` |
 
 The harness script defaults to `gpt-5.3-codex` for `codex_local` when no explicit model is set.
+
+For the Codex 5.3 high profile:
+
+```sh
+HARNESS_ADAPTER_TYPE=codex_local \
+HARNESS_MODEL=gpt-5.3-codex \
+HARNESS_MODEL_REASONING_EFFORT=high \
+./harness/scripts/setup-harness-agent-configs.sh
+```
 
 ## Common Failure Modes
 

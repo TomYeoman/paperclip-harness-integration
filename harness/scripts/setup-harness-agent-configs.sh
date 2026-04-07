@@ -14,6 +14,7 @@ export HARNESS_ROLE_SET="${HARNESS_ROLE_SET:-core}"
 export HARNESS_ADAPTER_TYPE="${HARNESS_ADAPTER_TYPE:-opencode_local}"
 export HARNESS_WORKSPACE_CWD="${HARNESS_WORKSPACE_CWD:-/workspace}"
 export HARNESS_MODEL="${HARNESS_MODEL:-}"
+export HARNESS_MODEL_REASONING_EFFORT="${HARNESS_MODEL_REASONING_EFFORT:-}"
 export HARNESS_CONFIGURE_CEO="${HARNESS_CONFIGURE_CEO:-true}"
 export HARNESS_GH_CONFIG_DIR="${HARNESS_GH_CONFIG_DIR:-/paperclip/.config/gh}"
 
@@ -39,6 +40,7 @@ const roleSet = (process.env.HARNESS_ROLE_SET || "core").toLowerCase();
 const adapterType = process.env.HARNESS_ADAPTER_TYPE || "opencode_local";
 const workspaceCwd = process.env.HARNESS_WORKSPACE_CWD || "/workspace";
 const explicitModel = (process.env.HARNESS_MODEL || "").trim();
+const explicitModelReasoningEffort = (process.env.HARNESS_MODEL_REASONING_EFFORT || "").trim().toLowerCase();
 const configureCeo = (process.env.HARNESS_CONFIGURE_CEO || "true").toLowerCase() !== "false";
 const ghConfigDir = (process.env.HARNESS_GH_CONFIG_DIR || "").trim();
 
@@ -84,6 +86,12 @@ function ciEquals(a, b) {
 
 function byName(agents, name) {
   return agents.find((a) => ciEquals(a.name, name) && a.status !== "terminated") || null;
+}
+
+function adapterReasoningEffortConfig(targetAdapterType) {
+  if (targetAdapterType !== "codex_local") return {};
+  if (!explicitModelReasoningEffort) return {};
+  return { modelReasoningEffort: explicitModelReasoningEffort };
 }
 
 async function resolveModel() {
@@ -240,6 +248,7 @@ async function upsertRoleAgent(existingAgents, ceoId, model, spec) {
     cwd: workspaceCwd,
     ...(Object.keys(commonAdapterEnv).length > 0 ? { env: commonAdapterEnv } : {}),
     ...(model ? { model } : {}),
+    ...adapterReasoningEffortConfig(adapterType),
   };
 
   const existing = byName(existingAgents, spec.name);
@@ -277,6 +286,15 @@ async function main() {
     throw new Error(`HARNESS_ROLE_SET must be one of: minimal, core, full, parity (got ${roleSet})`);
   }
 
+  if (explicitModelReasoningEffort) {
+    const allowedEffort = new Set(["minimal", "low", "medium", "high", "xhigh"]);
+    if (!allowedEffort.has(explicitModelReasoningEffort)) {
+      throw new Error(
+        `HARNESS_MODEL_REASONING_EFFORT must be one of: minimal, low, medium, high, xhigh (got ${explicitModelReasoningEffort})`,
+      );
+    }
+  }
+
   const agents = await request("GET", `/api/companies/${companyId}/agents`);
   if (!Array.isArray(agents)) throw new Error("Unexpected agents response");
 
@@ -294,14 +312,28 @@ async function main() {
     const commonAdapterEnv = {
       ...(ghConfigDir ? { GH_CONFIG_DIR: ghConfigDir } : {}),
     };
+    const ceoAdapterType = typeof ceo.adapterType === "string" ? ceo.adapterType : "";
+    const ceoModelConfig =
+      ceoAdapterType === adapterType
+        ? {
+            ...(model ? { model } : {}),
+            ...adapterReasoningEffortConfig(ceoAdapterType),
+          }
+        : {};
+
     await request("PATCH", `/api/agents/${ceo.id}`, {
       adapterConfig: {
         cwd: workspaceCwd,
         ...(Object.keys(commonAdapterEnv).length > 0 ? { env: commonAdapterEnv } : {}),
+        ...ceoModelConfig,
       },
     });
     await setInstructionsPath(ceo.id, ceoInstructionsPath);
-    console.log(`updated CEO (${ceo.id}) -> cwd=${workspaceCwd}, instructions=${ceoInstructionsPath}`);
+    console.log(
+      `updated CEO (${ceo.id}) -> cwd=${workspaceCwd}, instructions=${ceoInstructionsPath}${
+        ceoModelConfig.model ? `, model=${ceoModelConfig.model}` : ""
+      }${ceoModelConfig.modelReasoningEffort ? `, effort=${ceoModelConfig.modelReasoningEffort}` : ""}`,
+    );
   }
 
   const specs = desiredRoleSpecs();

@@ -11,7 +11,7 @@ Harness governance is runtime-agnostic. These overlays document the operational 
 | Adapter | Auth Prerequisites | CWD Policy | Model Config |
 |---------|-------------------|------------|--------------|
 | [claude-local.md](./claude-local.md) | `ANTHROPIC_API_KEY` or subscription | Inherited from adapter config | `claude-4` family |
-| [codex-local.md](./codex-local.md) | `OPENAI_API_KEY` or `codex login` | Inherited from adapter config | `gpt-5.3-codex` |
+| [codex-local.md](./codex-local.md) | `OPENAI_API_KEY` or `codex login` | Inherited from adapter config | `gpt-5.3-codex` + optional reasoning effort |
 | [opencode-local.md](./opencode-local.md) | `OPENCODE_API_KEY` or model discovery | Inherited from adapter config | Discovered at runtime |
 
 ## Shared Constraints

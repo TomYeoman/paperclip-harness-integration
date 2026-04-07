@@ -109,6 +109,7 @@ Optional:
 - `HARNESS_ROLE_SET` (`minimal|core|full|parity`, default `core`)
 - `HARNESS_ADAPTER_TYPE` (default `opencode_local`)
 - `HARNESS_MODEL` (override auto-discovered model)
+- `HARNESS_MODEL_REASONING_EFFORT` (`minimal|low|medium|high|xhigh`; `codex_local` only)
 - `HARNESS_PM_NAME` (default `Harness PM`)
 - `HARNESS_QE_NAME` (default `Harness QE`)
 - `HARNESS_CONTRACT_TESTER_NAME` (default `Harness Contract Tester`)
@@ -136,6 +137,18 @@ Role set mapping:
 - `core`: Builder + Reviewer + Tester + Architect
 - `full`: Builder + Reviewer + Tester + Architect + Auditor
 - `parity`: Full set + PM + QE + Contract Tester + Integration Tester + Security Researcher + Security Reviewer
+
+Codex 5.3 high profile example:
+
+```sh
+PAPERCLIP_API_KEY=<board-token> \
+PAPERCLIP_COMPANY_ID=<company-id> \
+HARNESS_ROLE_SET=parity \
+HARNESS_ADAPTER_TYPE=codex_local \
+HARNESS_MODEL=gpt-5.3-codex \
+HARNESS_MODEL_REASONING_EFFORT=high \
+./harness/scripts/setup-harness-agent-configs.sh
+```
 
 ## GitHub integration setup (Docker)
 
