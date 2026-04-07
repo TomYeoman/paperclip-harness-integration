@@ -23,7 +23,7 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
 1. `setup-harness-docker.sh`
    - **Primary entrypoint for Docker users.**
    - Runs the full sequence in the running `paperclip` container:
-     1) bootstrap project + hello-world issue, 2) configure role agents.
+     1) bootstrap project + hello-world issue, 2) optional parity test fixtures, 3) configure role agents.
    - Use this first in most setups.
 
 2. `bootstrap-harness-project-context.sh`
@@ -32,18 +32,24 @@ Canonical strategy/operations decisions are tracked in `harness/adr/`.
    - Sets issue instructions to run `pwd && ls -a` and report output.
    - Use for fresh bootstrap or to re-sync project metadata.
 
-3. `setup-harness-agent-configs.sh`
+3. `bootstrap-harness-parity-fixtures.sh`
+   - Ensures project `Harness Parity Validation` + label `harness-test` exist.
+   - Seeds replayable parity test issues for scenarios 1-7 from `harness/testing/HARA-12-manual-test-scenarios.md`.
+   - Supports project-only cloning with `HARNESS_FIXTURE_INCLUDE_ISSUES=false`.
+   - Use when validating a new machine/company against the harness scenario suite.
+
+4. `setup-harness-agent-configs.sh`
    - Creates/updates role agents (Builder/Reviewer/Tester/etc.) under the CEO.
    - Sets adapter type/model/cwd and per-role `instructionsFilePath`.
    - Use after role files are ready, and whenever role config drifts.
 
-4. `setup-harness-github.sh`
+5. `setup-harness-github.sh`
    - Validates GitHub integration for PR workflows from the harness runtime.
    - Checks `gh` auth, repo access, remote accessibility, and Issues availability.
    - Prints the expected branch -> push -> PR -> switch-back flow.
    - Adapter-specific behavior: see [harness/adapters/](../adapters/) for runtime overlay docs.
 
-4. `setup-harness-workspace-policy.sh`
+6. `setup-harness-workspace-policy.sh`
    - Configures project execution workspace policy for isolated worktree-based workspaces.
    - Sets `executionWorkspacePolicy.enabled=true` with `defaultMode=isolated_workspace`.
    - Configures `workspaceStrategy.type=git_worktree` with branch template.
@@ -83,6 +89,7 @@ HARNESS_ADAPTER_TYPE=opencode_local \
 ### Optional toggles for `setup-harness-docker.sh`
 
 - `HARNESS_RUN_CONTEXT_BOOTSTRAP=true|false`
+- `HARNESS_RUN_PARITY_FIXTURES_SETUP=true|false` (default false)
 - `HARNESS_RUN_AGENT_SETUP=true|false`
 - `HARNESS_RUN_GITHUB_SETUP=true|false` (default false)
 
@@ -116,6 +123,13 @@ Optional:
 - `HARNESS_SECURITY_RESEARCHER_NAME` (default `Harness Security Researcher`)
 - `HARNESS_SECURITY_REVIEWER_NAME` (default `Harness Security Reviewer`)
 - `HARNESS_HELLO_ISSUE_TITLE` (default `HARNESS: Hello world`)
+- `HARNESS_FIXTURE_PROJECT_NAME` (default `Harness Parity Validation`)
+- `HARNESS_FIXTURE_PROJECT_DESCRIPTION` (default `Dedicated replayable harness parity and smoke validation project.`)
+- `HARNESS_FIXTURE_LABEL_NAME` (default `harness-test`)
+- `HARNESS_FIXTURE_LABEL_COLOR` (default `#0f766e`)
+- `HARNESS_FIXTURE_WORKSPACE_CWD` (default `/workspace`)
+- `HARNESS_FIXTURE_INCLUDE_ISSUES` (default `true`)
+- `HARNESS_FIXTURE_RESET_STATE` (default `false`; set true to reset status/priority on existing fixture issues)
 - `HARNESS_GIT_DIR` (default `/workspace`)
 - `HARNESS_GITHUB_REMOTE` (default `fork`)
 - `HARNESS_GITHUB_REPO` (optional explicit `owner/repo`)
@@ -129,6 +143,25 @@ Optional for workspace policy script:
 - `HARNESS_BRANCH_TEMPLATE` (default `harness/issue-{issueNumber}`)
 - `HARNESS_WORKTREE_PARENT_DIR` (default `/workspace/worktrees`)
 - `HARNESS_ALLOW_ISSUE_OVERRIDE` (default `true`)
+
+### Seed parity fixtures directly (host mode)
+
+```sh
+PAPERCLIP_API_BASE=http://localhost:3100 \
+PAPERCLIP_API_KEY=<board-token> \
+PAPERCLIP_COMPANY_ID=<company-id> \
+./harness/scripts/bootstrap-harness-parity-fixtures.sh
+```
+
+Project-only clone (no test issues):
+
+```sh
+PAPERCLIP_API_BASE=http://localhost:3100 \
+PAPERCLIP_API_KEY=<board-token> \
+PAPERCLIP_COMPANY_ID=<company-id> \
+HARNESS_FIXTURE_INCLUDE_ISSUES=false \
+./harness/scripts/bootstrap-harness-parity-fixtures.sh
+```
 
 Role set mapping:
 

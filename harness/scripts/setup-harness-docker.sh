@@ -4,8 +4,9 @@ set -euo pipefail
 # One-command harness bootstrap for Docker deployments.
 # Runs (in order):
 # 1) project + hello-world issue bootstrap
-# 2) agent role configuration
-# 3) optional GitHub integration preflight
+# 2) optional parity test-project fixture bootstrap
+# 3) agent role configuration
+# 4) optional GitHub integration preflight
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "docker is required" >&2
@@ -18,6 +19,10 @@ if [[ ! -f "harness/scripts/bootstrap-harness-project-context.sh" ]]; then
 fi
 if [[ ! -f "harness/scripts/setup-harness-agent-configs.sh" ]]; then
   echo "Missing harness/scripts/setup-harness-agent-configs.sh" >&2
+  exit 1
+fi
+if [[ ! -f "harness/scripts/bootstrap-harness-parity-fixtures.sh" ]]; then
+  echo "Missing harness/scripts/bootstrap-harness-parity-fixtures.sh" >&2
   exit 1
 fi
 if [[ ! -f "harness/scripts/setup-harness-github.sh" ]]; then
@@ -58,6 +63,7 @@ for file in "${compose_files[@]}"; do
 done
 
 run_context="${HARNESS_RUN_CONTEXT_BOOTSTRAP:-true}"
+run_parity_fixtures="${HARNESS_RUN_PARITY_FIXTURES_SETUP:-false}"
 run_agents="${HARNESS_RUN_AGENT_SETUP:-true}"
 run_github="${HARNESS_RUN_GITHUB_SETUP:-false}"
 
@@ -88,6 +94,13 @@ optional_envs=(
   HARNESS_LABEL_NAME
   HARNESS_LABEL_COLOR
   HARNESS_HELLO_ISSUE_TITLE
+  HARNESS_FIXTURE_PROJECT_NAME
+  HARNESS_FIXTURE_PROJECT_DESCRIPTION
+  HARNESS_FIXTURE_LABEL_NAME
+  HARNESS_FIXTURE_LABEL_COLOR
+  HARNESS_FIXTURE_WORKSPACE_CWD
+  HARNESS_FIXTURE_INCLUDE_ISSUES
+  HARNESS_FIXTURE_RESET_STATE
   HARNESS_ROLE_SET
   HARNESS_ADAPTER_TYPE
   HARNESS_MODEL
@@ -127,6 +140,10 @@ run_script() {
 
 if [[ "$run_context" == "true" ]]; then
   run_script "harness/scripts/bootstrap-harness-project-context.sh" "bootstrap-harness-project-context.sh"
+fi
+
+if [[ "$run_parity_fixtures" == "true" ]]; then
+  run_script "harness/scripts/bootstrap-harness-parity-fixtures.sh" "bootstrap-harness-parity-fixtures.sh"
 fi
 
 if [[ "$run_agents" == "true" ]]; then

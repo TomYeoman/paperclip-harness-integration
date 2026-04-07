@@ -26,12 +26,15 @@ This gives you a clean query surface for harness-only work and makes it obvious 
 
 ## Initial Issue Policy
 
-Automation scripts intentionally create only one starter issue:
+Default bootstrap automation creates one starter issue:
 
 - `HARNESS: Hello world`
 
-This avoids opinionated backlog generation and keeps setup generic for new teams.
-Create additional harness issues manually from your own plan.
+This keeps core setup generic for new teams.
+
+For replayable validation environments, use the parity fixture bootstrap script to seed a dedicated test project and full scenario issue set (`harness/scripts/bootstrap-harness-parity-fixtures.sh`).
+
+If you only want org/project scaffolding without issues, run fixture bootstrap with `HARNESS_FIXTURE_INCLUDE_ISSUES=false`.
 
 ### Docker one-command path
 
@@ -88,6 +91,7 @@ Harness setup must be scriptable and replayable for new users/companies.
 Current setup scripts:
 
 - `harness/scripts/bootstrap-harness-project-context.sh`
+- `harness/scripts/bootstrap-harness-parity-fixtures.sh`
 - `harness/scripts/setup-harness-agent-configs.sh`
 - `harness/scripts/setup-harness-github.sh`
 - `harness/scripts/setup-harness-docker.sh`

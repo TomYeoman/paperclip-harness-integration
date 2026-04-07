@@ -5,6 +5,7 @@ Purpose: execute parity scenarios for ADR-003 domains in a dedicated Paperclip t
 ## Environment Guardrails
 
 - use a dedicated test company/project (not production company state)
+- seed/refresh fixture project + scenario issues with `harness/scripts/bootstrap-harness-parity-fixtures.sh`
 - capture issue identifiers, status transitions, PR URLs, and review evidence
 - record failures with exact step and observed response
 
